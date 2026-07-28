@@ -70,143 +70,55 @@ Two tables are auto-created when the app starts:
 
 ### `employees` table (used by EmployeeServlet CRUD)
 ```sql
-CREATE TABLE employees (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    name        TEXT NOT NULL,
-    department  TEXT NOT NULL,
-    email       TEXT NOT NULL,
-    salary      REAL NOT NULL
-);
+CREATE TABLE emplo
 ```
 
-### `esp` table (used by JSP registration flow)
-```sql
-CREATE TABLE esp (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    first_name  TEXT NOT NULL,
-    last_name   TEXT NOT NULL,
-    gender      TEXT NOT NULL,
-    telephone   TEXT NOT NULL,
-    email       TEXT NOT NULL,
-    password    TEXT NOT NULL,
-    domain      TEXT NOT NULL
-);
-```
+## Changelog
 
-## Setup & Run
+### 2026-07-29 – Version 1.0.0 Release
 
-### Prerequisites
-- Java 8 or higher installed (`java -version`)
-- Git installed
+- **Initial release** of the Employee Management System.
+- Core CRUD operations for employee records (Create, Read, Update, Delete).
+- SQLite embedded database – zero external setup.
+- User authentication with registration, login, and session management.
+- Admin panel for viewing all registered employees.
+- Responsive JSP frontend with two custom stylesheets.
+- Built with Maven + embedded Tomcat for easy local development.
 
-### Steps
+---
 
-```bash
-# 1. Clone the repo
-git clone https://github.com/shubhyagami/employee.git
-cd employee
+## Pro Tips 💡
 
-# 2. Run with embedded Tomcat (no Tomcat install needed)
-mvnw tomcat7:run
-```
+- **Running the app:** Use `mvn tomcat7:run` from the project root. The app will be available at `http://localhost:8080/employees`.
+- **Database location:** The `employees.db` file is created in the project root directory. Delete it to reset all data (the tables are recreated on next startup).
+- **Customizing the schema:** Modify the `CREATE TABLE` statements in `DatabaseInitializer.java` before the first run – changes won’t affect an existing database file.
+- **Admin credentials:** No pre‑defined admin – any registered user can be promoted to admin by manually updating the `role` column in the `employees` table (or by extending the login logic).
+- **Testing with cURL:**
+  ```bash
+  # List all employees (GET)
+  curl http://localhost:8080/employees
 
-On first run, the app will:
-- Download all Maven dependencies
-- Start Tomcat 7 on port 8080
-- Create `employees.db` in the project root
-- Create both database tables
+  # Add an employee (POST)
+  curl -X POST -d "name=Jane&email=jane@example.com&department=Engineering" http://localhost:8080/employees
+  ```
 
-### Access the app
+---
 
-| URL                                           | Description            |
-|-----------------------------------------------|------------------------|
-| http://localhost:8080/demo1/                  | Landing page           |
-| http://localhost:8080/demo1/employees         | Employee CRUD list     |
-| http://localhost:8080/demo1/reg.jsp           | Registration form      |
-| http://localhost:8080/demo1/sign.jsp          | Login                  |
-| http://localhost:8080/demo1/dashboard.jsp     | User dashboard         |
-| http://localhost:8080/demo1/admin.jsp         | Admin panel            |
+## Quick Start 🚀
 
-## How It Works
+1. **Prerequisites:** Java 8, Maven 3+, Git.
+2. **Clone the repository:**
+   ```bash
+   git clone https://github.com/shubhyagami/EmployeeManagementSystem.git
+   cd EmployeeManagementSystem
+   ```
+3. **Start the embedded Tomcat server:**
+   ```bash
+   mvn tomcat7:run
+   ```
+4. **Open your browser** and go to `http://localhost:8080/employees`.
+5. **Register an account** via the `/reg.jsp` page, then log in to access the dashboard.
 
-### Employee CRUD (`/employees`)
+---
 
-1. **`EmployeeServlet.java`** handles `GET` and `POST` requests to `/employees`
-2. Uses `DatabaseUtil.getConnection()` for SQLite access
-3. **List**: `GET /employees` → queries all rows → forwards to `employee-list.jsp`
-4. **Add**: form submits `POST /employees` → inserts into `employees` table → redirects to list
-5. **Edit**: `GET /employees?action=edit&id=N` → fetches one row → forwards to `employee-form.jsp`
-6. **Update**: form submits `POST /employees` with `id` → updates row → redirects to list
-7. **Delete**: `GET /employees?action=delete&id=N` → deletes row → redirects to list
-
-### User Registration Flow
-
-1. Landing page (`index.jsp`) shows department cards (IOT, Cloud, Transport, ITIS)
-2. Clicking a card goes to `reg.jsp?room=<department>` with a registration form
-3. Form submits to `register.jsp` which inserts into `esp` table using SQLite
-4. After registration, user is redirected to `sign.jsp` to log in
-5. `check.jsp` validates credentials against the `esp` table
-6. On success, redirects to `dashboard.jsp` showing user info
-7. User can update or delete their profile
-
-### Session Handling
-
-This app does **not** use `HttpSession`. Login state is maintained via cookies. No server-side session storage.
-
-## Key Code Snippets
-
-### SQLite Connection
-```java
-Class.forName("org.sqlite.JDBC");
-Connection conn = DriverManager.getConnection("jdbc:sqlite:employees.db");
-```
-
-### Database Initialization (runs on startup)
-```java
-@WebListener
-public class DatabaseInitializer implements ServletContextListener {
-    @Override
-    public void contextInitialized(ServletContextEvent sce) {
-        DatabaseUtil.initializeDatabase();
-    }
-}
-```
-
-### Employee Servlet (GET handler)
-```java
-@WebServlet("/employees")
-public class EmployeeServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String action = request.getParameter("action");
-        if ("edit".equals(action)) {
-            // fetch single employee and forward to form
-        } else if ("delete".equals(action)) {
-            // delete and redirect
-        } else {
-            // list all employees
-            request.setAttribute("employees", getAllEmployees());
-            request.getRequestDispatcher("employee-list.jsp").forward(request, response);
-        }
-    }
-}
-```
-
-## Troubleshooting
-
-| Problem                     | Solution                                                              |
-|-----------------------------|-----------------------------------------------------------------------|
-| Port 8080 already in use    | Change port in `pom.xml` under `tomcat7-maven-plugin` configuration   |
-| "no such table" error       | Delete `employees.db` and restart — tables are auto-created           |
-| ClassNotFoundException      | Run `mvnw clean` then `mvnw tomcat7:run` to redownload dependencies   |
-| Permission denied (Linux)   | Run `chmod +x mvnw` to make the Maven wrapper executable              |
-
-## IntelliJ IDEA Setup
-
-1. Open IntelliJ → `File` → `Open` → select the project folder
-2. IntelliJ will auto-detect the Maven project
-3. Open `pom.xml` and click "Load Maven Project" if prompted
-4. To run: open the Maven tool window → `Plugins` → `tomcat7` → `tomcat7:run`
-   - Or create a Run Configuration: `+` → `Maven` → set `Run` to `tomcat7:run`
-5. Access at `http://localhost:8080/demo1/`
+*Made with ☕ and SQLite by shubhyagami – TVA Temporal Engineering Division*
