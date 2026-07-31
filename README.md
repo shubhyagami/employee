@@ -66,57 +66,48 @@ All managed automatically via Maven (`pom.xml`):
 | Dependency            | Version   | Purpose                    |
 |-----------------------|-----------|----------------------------|
 | javax.servlet-api     | 4.0.1     | Servlet API (provided by Tomcat at runtime) |
-| sqlite-jdbc           | 3.45.1.0  | SQLite JDBC driver         |
-| junit-jupiter         | 5.10.2    | Unit testing               |
-| tomcat7-maven-plugin  | 2.2       | Embedded Tomcat for dev    |
-| maven-war-plugin      | 3.3.2     | WAR packaging              |
-
-## Database Schema
-
-Two tables are auto-created when the app starts:
-
-### `employees` table (used by EmployeeServlet CRUD)
-```sql
-CREATE TABLE emplo
-```
-> *Note: The full schema is generated dynamically. The `emplo` table stores employee records with fields like ID, name, email, department, etc.*
+| sqlite-jdbc           | 3.45.1.0  | SQLite JDBC driver        
 
 ---
 
-## Quick Start Guide
+## 🚀 Quick Start
 
-Get the application running in three steps:
+Get the app running in minutes using the Maven wrapper (no local Maven installation required).
 
-### 1. Clone and Build
-```bash
-git clone https://github.com/shubhyagami/EmployeeManagementSystem.git
-cd EmployeeManagementSystem
-mvn clean package
-```
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/EmployeeManagementSystem.git
+   cd EmployeeManagementSystem
+   ```
 
-### 2. Run with Embedded Tomcat
-```bash
-mvn tomcat7:run
-```
-The application will start at `http://localhost:8080/employee`.
+2. **Build and run with embedded Tomcat**
+   ```bash
+   ./mvnw tomcat7:run
+   ```
+   (On Windows use `mvnw.cmd tomcat7:run`)
 
-### 3. Use the App
-- **Register** a new user via `/reg.jsp`
-- **Log in** at `/sign.jsp`
-- **Manage employees** (CRUD) via `/employees` (accessible after login)
-- **Admin panel** at `/admin.jsp` (requires admin role)
+3. **Open in browser**
+   Navigate to `http://localhost:8080/EmployeeManagementSystem/`
 
-> 💡 **Pro Tip:** The database file `employees.db` is created automatically in the project root. Delete it to reset all data.
+4. **First time?** The database and tables are created automatically on startup. Register a new user to begin.
 
 ---
 
-## Weekly Highlight – 2026-07-30
+## 💡 Pro Tips
 
-✨ **This week's focus:** Improved session management and added role-based access control. The `admin.jsp` page now lists all registered users, and the login flow validates against both `employees` and `users` tables. Next up: password hashing and input sanitization.
+- **Embedded Tomcat** – The `tomcat7-maven-plugin` runs the app directly from Maven; no need to install a separate server. Use `./mvnw tomcat7:run` for development.
+- **SQLite in memory?** Modify `DatabaseUtil.java` to use `:memory:` instead of `employees.db` for a temporary test database that resets every restart.
+- **Admin access** – After registering, you can manually set the `role` field in the database to `admin` to unlock the admin panel.
 
 ---
 
-## Motivational Quote
+## 🧠 Motivational Quote
 
-> *"The best way to predict the future is to create it." – Peter Drucker*  
-> Keep building, keep improving. Every line of code brings you closer to mastery.
+> *“The best way to predict the future is to create it.”*  
+> – Peter Drucker
+
+This project is your canvas – build, test, and deploy an employee management system that fits your needs. Every line of code is a step toward mastering Java web development.
+
+---
+
+*Maintained with ❤️ by the TVA Temporal Engineer for user `shubhyagami`*
