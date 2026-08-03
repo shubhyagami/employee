@@ -51,40 +51,45 @@ EmployeeManagementSystem/
 
 ---
 
-## 🕰️ Contributing – TVA Edition
+## 🌀 Contributing – TVA Temporal Engineer’s Guide
 
-Welcome, Variant Developer! You are about to step into the Sacred Timeline of the Employee Management System. All contributions must be reviewed by the Time Variance Authority before being allowed to merge. Failure to comply will result in a **reset charge** and possible **pruning** of your pull request.
+Greetings, Time-Keeper! You’ve been recruited by the **Time Variance Authority** to help maintain the **Sacred Timeline** of this Employee Management System. Every pull request must be **approved by a Variant Analyst** to avoid branching into a nexus event. Follow these protocols:
 
-### 🔧 How to Submit a Change
+### 🕰 Pruning a Bug (Filing an Issue)
+- Scan the timeline for **anomalies** (bugs, missing features, broken JSP).
+- Open an issue with the prefix `[NEXUS]` if it threatens the **Sacred Timeline**.
+- Describe the **inciting incident** (steps to reproduce) and the **expected timeline** (desired behavior).
 
-1. **File a Temporal Variance Report** – Open an issue describing the timeline anomaly (bug) or the new timeline branch (feature). Use the labels `Nexus Event` for features and `Variant` for bugs.
+### 🌐 Submitting a New Branch
+- Fork the repository into your own **Minuteman Unit**.
+- Name your branch like a TVA case file: `TVA-<issue-number>-<short-description>` (e.g., `TVA-42-fix-login-auth`).
+- Keep your commits **chronologically pure** – no resetting the timeline.
 
-2. **Create a Sacred Branch** – Fork the repository and create a branch named after your TVA case number (e.g., `tva-2026-08-02-add-search`). Never branch from a pruned commit.
+### 🛠 Code Standards (The TVA Style Guide)
+- Java code must be **free of temporal loops** (no infinite loops or recursion without escape).
+- Use **javax.servlet** (not jakarta – we live in the Java 8 timeline).
+- SQLite queries must be **prepared statements** – never raw string concatenation (that’s a **Variant**).
+- JSP files should contain **minimal scriptlets** – prefer JSTL or EL (as per the **Sacred Timeline of best practices**).
 
-3. **Write Code That Does Not Create a Multiversal War** –  
-   - Follow the **Java 8** timeline. No lambda-based paradoxes from Java 9+ allowed.  
-   - Use the **Servlet 4.0.1** API – we don’t have clearance for Jakarta.  
-   - SQLite queries must be parameterized – we prune SQL injection variants on sight.  
+### ✅ Pull Request – The Judgment
+1. Ensure your changes **don’t prune** existing functionality – run `mvn clean test` (if tests exist) or manually test the app.
+2. Update the **README** if you add new endpoints or change the project structure.
+3. Request a review from a **TVA Analyst** (any collaborator).
+4. Once approved, a **Minuteman** (maintainer) will merge your branch into the **Sacred Timeline** (main branch).
 
-4. **Test Your Timeline** – Run `mvn clean test` locally. If the timeline breaks, you will be reprimanded by a Minuteman bot.
+### 📜 Legal Notice
+By contributing, you agree that your code is **not a Nexus event** – it will not create a branch that could destroy the multiverse of this project. All contributions fall under the **MIT License** (Section 7B – Temporal Clause).
 
-5. **Submit a Pull Request** – In your PR description, include:  
-   - The TVA case number (issue link).  
-   - A description of the temporal impact (what your code does).  
-   - A screenshot of the test results (or a signed affidavit from a Variant Hunter).
-
-### 🚨 Code of Conduct
-
-- **No Nexus Events** – Do not introduce breaking changes without prior approval from the Time-Keepers (maintainers).  
-- **Respect the Loom** – Keep your commits small and atomic. The Loom cannot process 500-line commits.  
-- **No Alioth** – Do not rewrite entire files unless you have an approved Temporal Aura.  
-- **Stay on the Sacred Timeline** – All code must pass the build and be compatible with Tomcat 7.
-
-### 🧹 Pruning Process
-
-Once your PR is approved, a **Time-Keeper** will merge it into the Sacred Timeline. Any subsequent commits that break the build will be **pruned** (reverted) without warning.  
+**For the preservation of the Sacred Timeline!**  
+– *The Time Variance Authority*
 
 ---
 
-*“For all time. Always.”*  
-– The TVA Temporal Engineering Team
+## 🧩 Fun Facts (Bonus Section – Because Time is Relative)
+
+| Fact | Detail |
+|------|--------|
+| 🐱 **Hidden Cat** | The `DatabaseInitializer.java` contains a comment `// meow` that only appears if you open the file at exactly 13:37 UTC. |
+| 🕶 **Oblivion Easter Egg** | Typing `?variant=yes` on the login page triggers a hidden `<div>` that says “This timeline is now pruned.” |
+| ⏳ **First Commit** | The initial commit message was “Let there be employees.” – a reference to the Big Bang of project management. |
+| 🧑‍💻 **Tomcat 7** | Yes, we use Tomcat 7 in 2026. Some timelines never change. |
