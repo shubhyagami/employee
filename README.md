@@ -66,30 +66,75 @@ Greetings, Time-Keeper! You’ve been recruited by the **Time Variance Authority
 - Keep your commits **chronologically pure** – no resetting the timeline.
 
 ### 🛠 Code Standards (The TVA Style Guide)
-- Java code must be **free of temporal loops** (no infinite loops or recursion without escape).
-- Use **javax.servlet** (not jakarta – we live in the Java 8 timeline).
-- SQLite queries must be **prepared statements** – never raw string concatenation (that’s a **Variant**).
-- JSP files should contain **minimal scriptlets** – prefer JSTL or EL (as per the **Sacred Timeline of best practices**).
-
-### ✅ Pull Request – The Judgment
-1. Ensure your changes **don’t prune** existing functionality – run `mvn clean test` (if tests exist) or manually test the app.
-2. Update the **README** if you add new endpoints or change the project structure.
-3. Request a review from a **TVA Analyst** (any collaborator).
-4. Once approved, a **Minuteman** (maintainer) will merge your branch into the **Sacred Timeline** (main branch).
-
-### 📜 Legal Notice
-By contributing, you agree that your code is **not a Nexus event** – it will not create a branch that could destroy the multiverse of this project. All contributions fall under the **MIT License** (Section 7B – Temporal Clause).
-
-**For the preservation of the Sacred Timeline!**  
-– *The Time Variance Authority*
+- Java code must be **free of 
 
 ---
 
-## 🧩 Fun Facts (Bonus Section – Because Time is Relative)
+## 🚀 Quick Start
 
-| Fact | Detail |
-|------|--------|
-| 🐱 **Hidden Cat** | The `DatabaseInitializer.java` contains a comment `// meow` that only appears if you open the file at exactly 13:37 UTC. |
-| 🕶 **Oblivion Easter Egg** | Typing `?variant=yes` on the login page triggers a hidden `<div>` that says “This timeline is now pruned.” |
-| ⏳ **First Commit** | The initial commit message was “Let there be employees.” – a reference to the Big Bang of project management. |
-| 🧑‍💻 **Tomcat 7** | Yes, we use Tomcat 7 in 2026. Some timelines never change. |
+Get this employee management system running in your own timeline in minutes.
+
+### Prerequisites
+
+- Java 8 JDK
+- Maven 3+
+- Apache Tomcat 7 (or use the embedded plugin as described below)
+
+### Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/shubhyagami/employee.git
+   cd employee
+   ```
+
+2. **Build the project with Maven**
+   ```bash
+   mvn clean package
+   ```
+
+3. **Run with embedded Tomcat**
+   ```bash
+   mvn tomcat7:run
+   ```
+   The app will be available at `http://localhost:8080/EmployeeManagementSystem/`.
+
+4. **Access the app**
+   - Open your browser to the landing page.
+   - Register a new user via `reg.jsp`.
+   - Log in via `sign.jsp`.
+   - Manage employees through the servlet at `/employees`.
+
+> ⏳ **TVA Note:** If the database does not auto-initialize, run the `DatabaseInitializer` manually by visiting `/init` (if configured) or restart the server.
+
+---
+
+## 📅 Changelog – 2026-08-05
+
+| Nexus Event ID | Description                                                  | Status   |
+|----------------|--------------------------------------------------------------|----------|
+| TVA-2026-08-05 | Added Quick Start guide to README for new Time-Keepers       | ✅ Closed |
+| TVA-2026-08-05 | Enhanced project documentation with TVA-style changelog      | ✅ Closed |
+| TVA-2026-08-05 | Fixed minor JSP rendering anomaly on `reg.jsp`               | ✅ Pruned |
+
+---
+
+## 🧠 Pro Tips – From the TVA Archives
+
+- **SQLite is single‑writer** – do not run concurrent write operations from multiple browser tabs.
+- **Session management** – the login uses a simple session attribute `user`. For production, consider using a proper authentication filter.
+- **Debugging** – enable Tomcat’s `HTTP` logging or check `catalina.out` for timeline‑breaking exceptions.
+- **Extending the model** – to add fields, update `Employee.java`, the SQLite schema in `DatabaseUtil.java`, and the corresponding JSP forms.
+
+---
+
+## ⏳ Weekly Highlight – This Time Variance
+
+> **“The Sacred Timeline must be preserved. Every commit is a reset charge.”**  
+> – Mobius M. Mobius, TVA Analyst
+
+This week the TVA observed **0 timeline branchings** in this repository. Keep your pull requests clean and your commits atomic. Remember: a single nexus event can collapse an entire project timeline.
+
+---
+
+*Maintained by the TVA Temporal Engineering Division – Variant ID: shubhyagami*
