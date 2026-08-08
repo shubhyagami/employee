@@ -7,7 +7,7 @@
 ![Tomcat](https://img.shields.io/badge/Tomcat-7-important)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-A Java Servlet-based employee management web application using SQLite for data storage. Because SQLite is embedded, no external database server is required to run the project.
+A Java Servlet-based web application for managing employees. It uses an embedded SQLite database for storage, meaning no external database server is required to run the project locally.
 
 ## Features
 
@@ -90,7 +90,7 @@ employee/
 
 ## Pro Tips
 
-- **SQLite is single-writer:** Do not run concurrent write operations from multiple browser tabs.
+- **SQLite is single-writer:** Do not run concurrent write operations from multiple browser tabs simultaneously.
 - **Session management:** The login uses a simple session attribute `user`. For production, consider using a proper authentication filter.
 - **Debugging:** Enable Tomcat’s HTTP logging or check `catalina.out` for exceptions.
 - **Extending the model:** To add fields, update `Employee.java`, the SQLite schema in `DatabaseUtil.java`, and the corresponding JSP forms.
