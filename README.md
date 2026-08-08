@@ -7,7 +7,7 @@
 ![Tomcat](https://img.shields.io/badge/Tomcat-7-important)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-A Java Servlet-based employee management web application using SQLite for data storage. No external database server is required.
+A Java Servlet-based employee management web application using SQLite for data storage. Because SQLite is embedded, no external database server is required to run the project.
 
 ## Features
 
@@ -30,7 +30,7 @@ A Java Servlet-based employee management web application using SQLite for data s
 ## Project Structure
 
 ```text
-EmployeeManagementSystem/
+employee/
 ├── pom.xml                          # Maven config with dependencies
 ├── mvnw / mvnw.cmd                  # Maven wrapper scripts
 ├── .gitignore
@@ -106,9 +106,9 @@ EmployeeManagementSystem/
 
 | Date       | Description                                                  |
 |------------|--------------------------------------------------------------|
-| 2026-08-05 | Added Quick Start guide to README                            |
-| 2026-08-05 | Enhanced project documentation and formatting                |
+| 2026-08-08 | Refined README structure and documentation formatting        |
 | 2026-08-05 | Fixed minor JSP rendering anomaly on `reg.jsp`               |
+| 2026-08-05 | Added initial Quick Start guide and enhanced documentation  |
 
 ## License
 
