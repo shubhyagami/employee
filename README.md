@@ -7,14 +7,14 @@
 ![Tomcat](https://img.shields.io/badge/Tomcat-7-important)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-A Java Servlet-based web application for managing employees. It uses an embedded SQLite database for storage, meaning no external database server is required to run the project locally.
+A Java Servlet-based web application for managing employee records. It uses an embedded SQLite database for storage, so no external database server setup is required to run the project locally.
 
 ## Features
 
-- **User Authentication:** Basic registration and login system.
+- **User Authentication:** Basic user registration and login system.
 - **Employee CRUD:** Create, read, update, and delete employee records via the `/employees` endpoint.
-- **Embedded Database:** SQLite auto-initializes the schema on application startup.
-- **Quick Local Development:** Runs entirely via the embedded Tomcat Maven plugin.
+- **Embedded Database:** SQLite auto-initializes the required schema on application startup.
+- **Local Development:** Runs entirely via the embedded Tomcat Maven plugin.
 
 ## Tech Stack
 
@@ -31,8 +31,8 @@ A Java Servlet-based web application for managing employees. It uses an embedded
 
 ```text
 employee/
-├── pom.xml                          # Maven config and dependencies
-├── mvnw / mvnw.cmd                  # Maven wrapper scripts
+├── pom.xml                           # Maven config and dependencies
+├── mvnw / mvnw.cmd                   # Maven wrapper scripts
 ├── .gitignore
 ├── README.md
 │
@@ -40,19 +40,19 @@ employee/
 │   └── main/
 │       ├── java/
 │       │   └── com/example/demo1/
-│       │       ├── Employee.java           # Employee model
-│       │       ├── EmployeeServlet.java    # CRUD servlet (/employees)
-│       │       ├── DatabaseUtil.java       # SQLite connection & table init
-│       │       └── DatabaseInitializer.java# Auto-runs table creation on startup
+│       │       ├── Employee.java            # Employee model
+│       │       ├── EmployeeServlet.java     # CRUD servlet (/employees)
+│       │       ├── DatabaseUtil.java        # SQLite connection & table init
+│       │       └── DatabaseInitializer.java # Auto-runs table creation on startup
 │       │
 │       └── webapp/
 │           ├── WEB-INF/
-│           │   └── web.xml                 # Web app descriptor
-│           ├── index.jsp                   # Landing page
-│           ├── reg.jsp                     # Registration form
-│           ├── register.jsp                # Registration action (SQL insert)
-│           ├── sign.jsp                    # Login form
-│           └── check.jsp                   # Login action (auth check)
+│           │   └── web.xml                  # Web app descriptor
+│           ├── index.jsp                    # Landing page
+│           ├── reg.jsp                      # Registration form
+│           ├── register.jsp                 # Registration action (SQL insert)
+│           ├── sign.jsp                     # Login form
+│           └── check.jsp                    # Login action (auth check)
 ```
 
 ## Getting Started
@@ -90,9 +90,9 @@ employee/
 
 ## Pro Tips
 
-- **SQLite Concurrency:** SQLite is single-writer. Avoid running concurrent write operations from multiple browser tabs simultaneously.
+- **SQLite Concurrency:** SQLite is single-writer. Avoid running concurrent write operations from multiple browser tabs simultaneously to prevent database locking.
 - **Session Management:** Login uses a simple `user` session attribute. For production, implement a proper authentication filter.
-- **Debugging:** Enable Tomcat’s HTTP logging or check `catalina.out` for exceptions.
+- **Debugging:** Enable Tomcat’s HTTP logging or check `catalina.out` for stack traces and exceptions.
 - **Extending the Model:** To add fields, update `Employee.java`, the SQLite schema in `DatabaseUtil.java`, and the corresponding JSP forms.
 
 ## Contributing
@@ -106,6 +106,7 @@ employee/
 
 | Date       | Description                                                  |
 |------------|--------------------------------------------------------------|
+| 2026-08-10 | README cleanup: polished grammar, formatting, and structure |
 | 2026-08-09 | Refined README structure, formatting, and project clarity    |
 | 2026-08-08 | Refined README structure and documentation formatting        |
 | 2026-08-05 | Fixed minor JSP rendering anomaly on `reg.jsp`               |
