@@ -11,27 +11,27 @@ A Java Servlet-based web application for managing employees. It uses an embedded
 
 ## Features
 
-- User registration and login
-- Employee CRUD operations (Create, Read, Update, Delete)
-- Embedded SQLite database that auto-initializes on startup
-- Embedded Tomcat support for quick local development
+- **User Authentication:** Basic registration and login system.
+- **Employee CRUD:** Create, read, update, and delete employee records via the `/employees` endpoint.
+- **Embedded Database:** SQLite auto-initializes the schema on application startup.
+- **Quick Local Development:** Runs entirely via the embedded Tomcat Maven plugin.
 
 ## Tech Stack
 
-| Component          | Technology                     |
-|--------------------|--------------------------------|
-| Language           | Java 8                         |
-| Web Framework      | Java Servlet (javax.servlet)   |
-| Database           | SQLite                         |
-| Build Tool         | Maven 3+                       |
-| Server             | Tomcat 7 (embedded via plugin) |
-| Frontend           | JSP, HTML, CSS                 |
+| Component     | Technology                     |
+|---------------|--------------------------------|
+| Language      | Java 8                         |
+| Web Framework | Java Servlet (javax.servlet)   |
+| Database      | SQLite                         |
+| Build Tool    | Maven 3+                       |
+| Server        | Tomcat 7 (embedded via plugin) |
+| Frontend      | JSP, HTML, CSS                 |
 
 ## Project Structure
 
 ```text
 employee/
-├── pom.xml                          # Maven config with dependencies
+├── pom.xml                          # Maven config and dependencies
 ├── mvnw / mvnw.cmd                  # Maven wrapper scripts
 ├── .gitignore
 ├── README.md
@@ -52,7 +52,7 @@ employee/
 │           ├── reg.jsp                     # Registration form
 │           ├── register.jsp                # Registration action (SQL insert)
 │           ├── sign.jsp                    # Login form
-│           ├── check.jsp                   # Login action (auth check)
+│           └── check.jsp                   # Login action (auth check)
 ```
 
 ## Getting Started
@@ -61,9 +61,9 @@ employee/
 
 - Java 8 JDK
 - Maven 3+
-- Apache Tomcat 7 (or use the embedded Maven plugin as described below)
+- Git
 
-### Setup
+### Setup & Running
 
 1. **Clone the repository**
    ```bash
@@ -83,17 +83,17 @@ employee/
    The app will be available at `http://localhost:8080/EmployeeManagementSystem/`.
 
 4. **Access the app**
-   - Open your browser to the landing page.
+   - Open the landing page in your browser.
    - Register a new user via `reg.jsp`.
    - Log in via `sign.jsp`.
    - Manage employees through the servlet at `/employees`.
 
 ## Pro Tips
 
-- **SQLite is single-writer:** Do not run concurrent write operations from multiple browser tabs simultaneously.
-- **Session management:** The login uses a simple session attribute `user`. For production, consider using a proper authentication filter.
+- **SQLite Concurrency:** SQLite is single-writer. Avoid running concurrent write operations from multiple browser tabs simultaneously.
+- **Session Management:** Login uses a simple `user` session attribute. For production, implement a proper authentication filter.
 - **Debugging:** Enable Tomcat’s HTTP logging or check `catalina.out` for exceptions.
-- **Extending the model:** To add fields, update `Employee.java`, the SQLite schema in `DatabaseUtil.java`, and the corresponding JSP forms.
+- **Extending the Model:** To add fields, update `Employee.java`, the SQLite schema in `DatabaseUtil.java`, and the corresponding JSP forms.
 
 ## Contributing
 
@@ -106,6 +106,7 @@ employee/
 
 | Date       | Description                                                  |
 |------------|--------------------------------------------------------------|
+| 2026-08-09 | Refined README structure, formatting, and project clarity    |
 | 2026-08-08 | Refined README structure and documentation formatting        |
 | 2026-08-05 | Fixed minor JSP rendering anomaly on `reg.jsp`               |
 | 2026-08-05 | Added initial Quick Start guide and enhanced documentation  |
