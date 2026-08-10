@@ -7,7 +7,7 @@
 ![Tomcat](https://img.shields.io/badge/Tomcat-7-important)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-A Java Servlet-based web application for managing employee records. It uses an embedded SQLite database for storage, so no external database server setup is required to run the project locally.
+A Java Servlet-based web application for managing employee records. It uses an embedded SQLite database for storage, meaning no external database setup is required to run the project locally.
 
 ## Features
 
