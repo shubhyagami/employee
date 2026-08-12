@@ -88,7 +88,7 @@ employee/
    - Log in via `sign.jsp`.
    - Manage employees through the servlet at `/employees`.
 
-## Pro Tips
+## Notes for Developers
 
 - **SQLite Concurrency:** SQLite is single-writer. Avoid running concurrent write operations from multiple browser tabs simultaneously to prevent database locking.
 - **Session Management:** Login uses a simple `user` session attribute. For production, implement a proper authentication filter.
@@ -106,10 +106,11 @@ employee/
 
 | Date       | Description                                                  |
 |------------|--------------------------------------------------------------|
+| 2026-08-12 | README cleanup: improved structure and developer notes       |
 | 2026-08-10 | README cleanup: polished grammar, formatting, and structure |
 | 2026-08-09 | Refined README structure, formatting, and project clarity    |
 | 2026-08-08 | Refined README structure and documentation formatting        |
-| 2026-08-05 | Fixed minor JSP rendering anomaly on `reg.jsp`               |
+| 2026-08-05 | Fixed minor JSP rendering anomaly on `reg.jsp`              |
 | 2026-08-05 | Added initial Quick Start guide and enhanced documentation  |
 
 ## License
