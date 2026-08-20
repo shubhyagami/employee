@@ -80,7 +80,7 @@ employee/
    ```bash
    mvn tomcat7:run
    ```
-   The app will be available at `http://localhost:8080/EmployeeManagementSystem/`.
+   Once started, the application will be available at `http://localhost:8080/EmployeeManagementSystem/`.
 
 4. **Access the app**
    - Open the landing page in your browser.
@@ -88,9 +88,9 @@ employee/
    - Log in via `sign.jsp`.
    - Manage employees through the servlet at `/employees`.
 
-## Notes for Developers
+## Developer Notes
 
-- **SQLite Concurrency:** SQLite is single-writer. Avoid running concurrent write operations from multiple browser tabs simultaneously to prevent database locking.
+- **SQLite Concurrency:** SQLite is a single-writer database. Avoid running concurrent write operations from multiple browser tabs simultaneously to prevent database locking.
 - **Session Management:** Login uses a simple `user` session attribute. For production, implement a proper authentication filter.
 - **Debugging:** Enable Tomcat’s HTTP logging or check `catalina.out` for stack traces and exceptions.
 - **Extending the Model:** To add fields, update `Employee.java`, the SQLite schema in `DatabaseUtil.java`, and the corresponding JSP forms.
@@ -106,12 +106,10 @@ employee/
 
 | Date       | Description                                                  |
 |------------|--------------------------------------------------------------|
+| 2026-08-20 | Dropped redundant changelog entries; streamlined developer notes |
 | 2026-08-12 | README cleanup: improved structure and developer notes       |
 | 2026-08-10 | README cleanup: polished grammar, formatting, and structure |
-| 2026-08-09 | Refined README structure, formatting, and project clarity    |
-| 2026-08-08 | Refined README structure and documentation formatting        |
 | 2026-08-05 | Fixed minor JSP rendering anomaly on `reg.jsp`              |
-| 2026-08-05 | Added initial Quick Start guide and enhanced documentation  |
 
 ## License
 
