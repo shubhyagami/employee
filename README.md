@@ -14,7 +14,7 @@ A Java Servlet-based web application for managing employee records. It uses an e
 - **User Authentication:** Basic user registration and login system.
 - **Employee CRUD:** Create, read, update, and delete employee records via the `/employees` endpoint.
 - **Embedded Database:** SQLite auto-initializes the required schema on application startup.
-- **Local Development:** Runs entirely via the embedded Tomcat Maven plugin.
+- **Local Development:** Runs entirely via the embedded Tomcat Maven plugin without requiring a local server installation.
 
 ## Tech Stack
 
@@ -106,6 +106,7 @@ employee/
 
 | Date       | Description                                                  |
 |------------|--------------------------------------------------------------|
+| 2026-08-21 | README cleanup: refined formatting and local dev notes      |
 | 2026-08-20 | Dropped redundant changelog entries; streamlined developer notes |
 | 2026-08-12 | README cleanup: improved structure and developer notes       |
 | 2026-08-10 | README cleanup: polished grammar, formatting, and structure |
