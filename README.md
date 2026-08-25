@@ -7,14 +7,29 @@
 ![Tomcat](https://img.shields.io/badge/Tomcat-7-important)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-A Java Servlet-based web application for managing employee records. It uses an embedded SQLite database for storage, meaning no external database setup is required to run the project locally.
+A lightweight, Java Servlet-based web application for managing employee records. It utilizes an embedded SQLite database, eliminating the need for external database setup during local development.
 
 ## Features
 
-- **User Authentication:** Basic user registration and login system.
-- **Employee CRUD:** Create, read, update, and delete employee records via the `/employees` endpoint.
-- **Embedded Database:** SQLite auto-initializes the required schema on application startup.
-- **Local Development:** Runs entirely via the embedded Tomcat Maven plugin without requiring a local server installation.
+### User Authentication
+
+* **Basic Registration and Login**: Sign up and log in with a simple user registration and login system.
+* **Security Considerations**: Implement proper authentication filters for production environments to ensure secure session management.
+
+### Employee CRUD Operations
+
+* **Create**: Add new employee records through the `/employees` endpoint.
+* **Read**: Retrieve existing employee records via the `/employees` endpoint.
+* **Update**: Modify existing employee records using the `/employees` endpoint.
+* **Delete**: Remove employee records using the `/employees` endpoint.
+
+### Embedded Database
+
+* **SQLite Initialization**: The embedded SQLite database auto-initializes the required schema on application startup, ensuring a seamless development experience.
+
+### Local Development
+
+* **Tomcat Embedded Plugin**: The application is designed to run entirely via the embedded Tomcat Maven plugin, eliminating the need for a local server installation.
 
 ## Tech Stack
 
@@ -59,16 +74,15 @@ employee/
 
 ### Prerequisites
 
-- Java 8 JDK
-- Maven 3+
-- Git
+* Java 8 JDK
+* Maven 3+
+* Git
 
 ### Setup & Running
 
 1. **Clone the repository**
    ```bash
    git clone https://github.com/shubhyagami/employee.git
-   cd employee
    ```
 
 2. **Build the project**
@@ -90,10 +104,9 @@ employee/
 
 ## Developer Notes
 
-- **SQLite Concurrency:** SQLite is a single-writer database. Avoid running concurrent write operations from multiple browser tabs simultaneously to prevent database locking.
-- **Session Management:** Login uses a simple `user` session attribute. For production, implement a proper authentication filter.
-- **Debugging:** Enable Tomcat’s HTTP logging or check `catalina.out` for stack traces and exceptions.
-- **Extending the Model:** To add fields, update `Employee.java`, the SQLite schema in `DatabaseUtil.java`, and the corresponding JSP forms.
+* **SQLite Concurrency**: Avoid running concurrent write operations from multiple browser tabs simultaneously to prevent database locking.
+* **Debugging**: Enable Tomcat’s HTTP logging or check `catalina.out` for stack traces and exceptions.
+* **Extending the Model**: To add fields, update `Employee.java`, the SQLite schema in `DatabaseUtil.java`, and the corresponding JSP forms.
 
 ## Contributing
 
@@ -104,13 +117,12 @@ employee/
 
 ## Changelog
 
-| Date       | Description                                                  |
-|------------|--------------------------------------------------------------|
-| 2026-08-21 | README cleanup: refined formatting and local dev notes      |
-| 2026-08-20 | Dropped redundant changelog entries; streamlined developer notes |
-| 2026-08-12 | README cleanup: improved structure and developer notes       |
-| 2026-08-10 | README cleanup: polished grammar, formatting, and structure |
-| 2026-08-05 | Fixed minor JSP rendering anomaly on `reg.jsp`              |
+| Date       | Description                                  |
+|------------|------------------------------------------------|
+| 2026-08-21 | README cleanup                               |
+| 2026-08-12 | Improved README with no redundant entries    |
+| 2026-08-10 | Polished README with corrected grammar and structure |
+| 2026-08-05 | Fixed JSP rendering anomaly on `reg.jsp`       |
 
 ## License
 
