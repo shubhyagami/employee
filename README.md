@@ -14,7 +14,7 @@ A lightweight, Java Servlet-based web application for managing employee records.
 ### User Authentication
 
 #### Registration and Login
-* A simple user registration and login system allows users to sign up and log in securely.
+* A secure user registration and login system allows users to sign up and log in.
 * Proper authentication filters ensure secure session management in production environments.
 
 ### Employee CRUD Operations
