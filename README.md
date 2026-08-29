@@ -11,20 +11,20 @@ A lightweight Java servlet application that manages employee records using an em
 ## Features  
 
 - **User Authentication** – Secure registration and login with session handling.  
-- **CRUD Operations** – Create, Read, Update, and Delete employee records via the `/employees` endpoint.  
+- **CRUD Operations** – Create, read, update, and delete employee records via the `/employees` endpoint.  
 - **Embedded Database** – SQLite automatically initializes the schema on startup, eliminating external DB setup.  
 - **Local Development Friendly** – Embedded Tomcat Maven plugin removes the need for a separate server installation.  
 
 ## Tech Stack  
 
-| Component      | Technology                           |
-|----------------|--------------------------------------|
-| Language       | Java 8                               |
-| Web Framework  | Java Servlet (`javax.servlet`)       |
-| Database       | SQLite                               |
-| Build Tool     | Maven 3+                             |
-| Server         | Tomcat 7 (embedded via Maven plugin) |
-| Frontend       | JSP, HTML, CSS                       |
+| Component      | Technology                               |
+|----------------|------------------------------------------|
+| Language       | Java 8                                   |
+| Web Framework  | Java Servlet (`javax.servlet`)          |
+| Database       | SQLite                                   |
+| Build Tool     | Maven 3+                                 |
+| Server         | Tomcat 7 (embedded via Maven plugin)     |
+| Frontend       | JSP, HTML, CSS                           |
 
 ## Project Structure  
 
@@ -57,6 +57,7 @@ employee/
 ## Getting Started  
 
 ### Prerequisites  
+
 - Java 8 JDK  
 - Maven 3+  
 - Git  
@@ -81,12 +82,10 @@ The application starts at `http://localhost:8080/EmployeeManagementSystem/`.
 
 ## Changelog (selected)  
 
-| Date       | Change |
-|------------|--------|
-| 2026‑08‑21 | Cleaned up README and reorganized sections |
-| 2026‑08‑12 | Added clear feature list and tech‑stack table |
-| 2026‑08‑10 | Polished wording and fixed minor typos |
-| 2026‑08‑05 | Fixed rendering issue on `reg.jsp` |
+- **2026‑08‑21** – Cleaned up README and reorganized sections.  
+- **2026‑08‑12** – Added clear feature list and tech‑stack table.  
+- **2026‑08‑10** – Polished wording and fixed minor typos.  
+- **2026‑08‑05** – Fixed rendering issue on `reg.jsp`.  
 
 ## License  
 
