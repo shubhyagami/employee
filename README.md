@@ -1,42 +1,32 @@
-# Employee Management System
+# Employee Management System  
 
-[![Java](https://img.shields.io/badge/Java-8-blue)](https://www.oracle.com/java/technologies/javase-jdk8-javadoc.html)
-[![Maven](https://img.shields.io/badge/Maven-3%2B-red)](https://maven.apache.org/)
-[![SQLite](https://img.shields.io/badge/SQLite-3.45.1-orange)](https://www.sqlite.org/)
-[![Tomcat](https://img.shields.io/badge/Tomcat-7-orange)](https://tomcat.apache.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow)](https://opensource.org/licenses/MIT)
+[![Java](https://img.shields.io/badge/Java-8-blue)](https://www.oracle.com/java/technologies/javase-jdk8-javadoc.html)  
+[![Maven](https://img.shields.io/badge/Maven-3%2B-red)](https://maven.apache.org/)  
+[![SQLite](https://img.shields.io/badge/SQLite-3.45.1-orange)](https://www.sqlite.org/)  
+[![Tomcat](https://img.shields.io/badge/Tomcat-7-orange)](https://tomcat.apache.org/)  
+[![License](https://img.shields.io/badge/License-MIT-yellow)](https://opensource.org/licenses/MIT)  
 
-A lightweight Java Servlet application that manages employee records using an embedded SQLite database. It runs with an embedded Tomcat instance, making it ideal for local development and quick prototyping.
+A lightweight Java servlet application that manages employee records using an embedded SQLite database. It runs with an embedded Tomcat instance, making it ideal for local development and quick prototyping.
 
-## Features
+## Features  
 
-- **User Authentication**  
-  Secure registration and login with session handling.
+- **User Authentication** – Secure registration and login with session handling.  
+- **CRUD Operations** – Create, Read, Update, and Delete employee records via the `/employees` endpoint.  
+- **Embedded Database** – SQLite automatically initializes the schema on startup, eliminating external DB setup.  
+- **Local Development Friendly** – Embedded Tomcat Maven plugin removes the need for a separate server installation.  
 
-- **CRUD Operations**  
-  - **Create**: Add employee records via `/employees`  
-  - **Read**: Retrieve records  
-  - **Update**: Modify existing records  
-  - **Delete**: Remove records
+## Tech Stack  
 
-- **Embedded Database**  
-  SQLite auto‑initializes the schema on startup, eliminating external DB setup.
+| Component      | Technology                           |
+|----------------|--------------------------------------|
+| Language       | Java 8                               |
+| Web Framework  | Java Servlet (`javax.servlet`)       |
+| Database       | SQLite                               |
+| Build Tool     | Maven 3+                             |
+| Server         | Tomcat 7 (embedded via Maven plugin) |
+| Frontend       | JSP, HTML, CSS                       |
 
-- **Local Development Friendly**  
-  Embedded Tomcat Maven plugin removes the need for a separate server installation.
-
-## Tech Stack
-
-| Component          | Technology                           |
-|--------------------|--------------------------------------|
-| Language           | Java 8                               |
-| Web Framework      | Java Servlet (`javax.servlet`)       |
-| Database           | SQLite                               |
-| Build Tool         | Maven 3+                             |
-| Server             | Tomcat 7 (embedded via Maven plugin) |
-| Frontend           | JSP, HTML, CSS                       |
-
-## Project Structure
+## Project Structure  
 
 ```
 employee/
@@ -64,29 +54,32 @@ employee/
 │           └── check.jsp                  # Login authentication
 ```
 
-## Getting Started
+## Getting Started  
 
-### Prerequisites
-- Java 8 JDK
-- Maven 3+
-- Git
+### Prerequisites  
+- Java 8 JDK  
+- Maven 3+  
+- Git  
 
-### Quick Setup
+### Quick Setup  
+
 ```bash
 git clone https://github.com/shubhyagami/employee.git
 cd employee
 mvn clean package
 mvn tomcat7:run
 ```
-The application starts on `http://localhost:8080/EmployeeManagementSystem/`.
 
-### First Use
+The application starts at `http://localhost:8080/EmployeeManagementSystem/`.
+
+### First Use  
+
 1. Open the landing page in a browser.  
 2. Register a new user via `reg.jsp`.  
 3. Log in with the newly created account using `sign.jsp`.  
-4. Manage employees through the `/employees` endpoint.
+4. Manage employees through the `/employees` endpoint.  
 
-## Changelog (selected)
+## Changelog (selected)  
 
 | Date       | Change |
 |------------|--------|
@@ -95,6 +88,6 @@ The application starts on `http://localhost:8080/EmployeeManagementSystem/`.
 | 2026‑08‑10 | Polished wording and fixed minor typos |
 | 2026‑08‑05 | Fixed rendering issue on `reg.jsp` |
 
-## License
+## License  
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
