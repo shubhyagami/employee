@@ -42,7 +42,7 @@ employee/
 │       │       ├── Employee.java          # Model class
 │       │       ├── EmployeeServlet.java   # CRUD servlet (/employees)
 │       │       ├── DatabaseUtil.java      # SQLite connection & table init
-│       │       └── DatabaseInitializer.java # Auto‑creates tables on startup
+│       │       └── DatabaseInitializer.java # Creates tables on startup
 │       │
 │       └── webapp/
 │           ├── WEB-INF/
