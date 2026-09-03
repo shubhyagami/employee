@@ -1,6 +1,6 @@
 # Employee Management System
 
-A lightweight Java servlet application that stores employee records in an embedded SQLite database and runs on an embedded Tomcat instance – no external servers needed.
+A lightweight Java Servlet application that stores employee records in an embedded SQLite database and runs on an embedded Tomcat server. No external servers are required—just a single JAR or the Maven wrapper.
 
 ![Java 8](https://img.shields.io/badge/Java-8-blue?logo=java)
 ![Maven 3+](https://img.shields.io/badge/Maven-3%2B-red?logo=maven)
@@ -10,26 +10,39 @@ A lightweight Java servlet application that stores employee records in an embedd
 
 ---
 
+## Table of Contents
+
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [API](#api)
+- [Contributing](#contributing)
+- [Changelog](#changelog)
+- [License](#license)
+
+---
+
 ## Features
 
-- **User authentication** – register, log in, and maintain sessions.
+- **User authentication** – register, log in, and manage sessions via cookies.
 - **RESTful CRUD API** – `GET`, `POST`, `PUT`, `DELETE` on `/employees`.
-- **Automatic schema creation** – tables are generated on first run.
-- **Standalone deployment** – a single fat JAR, or use the embedded Tomcat Maven plugin for local development.
-- **Simple front‑end** – JSP pages for registration, login, and employee management.
+- **Automatic schema creation** – database tables are created on first run.
+- **Standalone deployment** – a single fat JAR, or run locally with the embedded Tomcat Maven plugin.
+- **Simple UI** – JSP pages for registration, login, and employee management.
 
 ---
 
 ## Tech Stack
 
-| Category     | Technology |
-|--------------|------------|
-| Language     | Java 8 |
-| Web framework | Java Servlet (`javax.servlet`) |
-| Database     | SQLite |
-| Build tool   | Maven 3+ |
-| Server       | Embedded Tomcat 7 |
-| Front‑end    | JSP, HTML, CSS |
+| Category | Technology |
+|----------|------------|
+| Language | Java 8 (compatible with newer JDKs) |
+| Server   | Embedded Tomcat 7 |
+| Web framework | Servlet API (`javax.servlet`) |
+| Database | SQLite 3.45.1 |
+| Build tool | Maven 3+ |
+| Front‑end | JSP, HTML, CSS |
 
 ---
 
@@ -37,9 +50,9 @@ A lightweight Java servlet application that stores employee records in an embedd
 
 ```
 employee/
-├── pom.xml          # Maven configuration
-├── mvnw             # Maven wrapper (Unix)
-├── mvnw.cmd         # Maven wrapper (Windows)
+├── pom.xml                # Maven build configuration
+├── mvnw                   # Maven wrapper (Unix)
+├── mvnw.cmd               # Maven wrapper (Windows)
 ├── .gitignore
 ├── README.md
 ├── LICENSE
@@ -61,7 +74,7 @@ employee/
             └── check.jsp
 ```
 
-The context path is defined in `WEB‑INF/web.xml`; by default the application is exposed at `http://localhost:8080/EmployeeManagementSystem/`.
+The application context is defined in `WEB-INF/web.xml`. By default it is exposed at `http://localhost:8080/EmployeeManagementSystem/`.
 
 ---
 
@@ -69,9 +82,9 @@ The context path is defined in `WEB‑INF/web.xml`; by default the application i
 
 ### Prerequisites
 
-- **JDK 8** (Java 8 compatible; newer JDKs work too)
-- **Maven 3+**
-- **Git**
+- JDK 8 (any newer JDK works)
+- Maven 3+
+- Git
 
 ### Quick Setup
 
@@ -87,9 +100,9 @@ mvn clean package
 mvn tomcat7:run
 ```
 
-> **Tip** – You can skip the Maven build step if you prefer the pre‑built JAR: `java -jar target/employee-jar-with-dependencies.jar`.
-
-The web application will be available at `http://localhost:8080/EmployeeManagementSystem/`.
+> **Tip** – If you prefer not to build the application yourself, you can run the pre‑built JAR:  
+> `java -jar target/employee-jar-with-dependencies.jar`.  
+> The web UI will be available at `http://localhost:8080/EmployeeManagementSystem/`.
 
 ### First Use
 
@@ -102,39 +115,40 @@ The web application will be available at `http://localhost:8080/EmployeeManageme
 
 ## API
 
-All responses are JSON. Authentication is required for non‑GET requests; a session cookie is issued upon successful login.
+All responses are JSON. Authentication is required for `POST`, `PUT`, and `DELETE`. A session cookie is set after successful login.
 
-| Method | URL                     | Description                     |
-|--------|------------------------|---------------------------------|
-| GET    | `/employees`           | List all employees.             |
-| POST   | `/employees`           | Create a new employee.          |
-| PUT    | `/employees/{id}`      | Update an existing employee.     |
-| DELETE | `/employees/{id}`      | Remove an employee.             |
+| Method | URL               | Description                         |
+|--------|-------------------|-------------------------------------|
+| `GET`  | `/employees`     | List all employees.                 |
+| `POST` | `/employees`     | Create a new employee.             |
+| `PUT`  | `/employees/{id}` | Update an existing employee.       |
+| `DELETE` | `/employees/{id}` | Remove an employee.              |
 
-Use the `Authorization` header or session cookie for non‑GET calls.
+You can authenticate by sending the session cookie returned from `/login` or by using the `Authorization` header with a `Bearer` token (if you add that feature later).
 
 ---
 
 ## Contributing
 
-Pull requests are welcome. Before submitting:
+Pull requests are welcome! Before submitting:
 
 1. Run the test suite: `mvn test`.  
-2. Ensure code follows the existing style (indentation, naming).  
-3. Update documentation when adding or changing features.
+2. Follow the existing naming and indentation conventions.  
+3. Update the documentation if you add or change features.
+
+If you encounter an issue, feel free to open one. Please provide a clear description and, if possible, a minimal example that reproduces the problem.
 
 ---
 
 ## Changelog
 
-- **2026-09-02** – README cleaned up, sections reorganised.  
-- **2026-08-21** – Minor wording edits.  
-- **2026-08-12** – Added feature list and tech‑stack table.  
-- **2026-08-10** – Fixed typos.  
-- **2026-08-05** – Fixed rendering issue on `reg.jsp`.
+- **2026‑09‑03** – Minor documentation cleanup and grammar fixes.  
+- **2026‑09‑02** – Reorganised sections and added a concise feature list.  
+- **2026‑08‑21** – Wording edits.  
+- **2026‑08‑12** – Added tech‑stack table.  
 
 ---
 
 ## License
 
-MIT – see the `LICENSE` file.
+This project is licensed under the MIT License – see the `LICENSE` file for details.
