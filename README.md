@@ -1,7 +1,7 @@
 # Employee Management System
 
 A lightweight Java web application that stores employee data in an embedded SQLite database and runs on an embedded Tomcat server.  
-Build a single fat JAR or use the Maven wrapper – no external servers are required.
+Build a single fat JAR with Maven or use the Maven wrapper – no external servers are required.
 
 ![Java 8](https://img.shields.io/badge/Java-8-blue?logo=java)  
 ![Maven 3+](https://img.shields.io/badge/Maven-3%2B-red?logo=maven)  
@@ -13,43 +13,43 @@ Build a single fat JAR or use the Maven wrapper – no external servers are requ
 
 ## Table of contents
 
-- [Overview](#overview)
+- [Introduction](#introduction)
 - [Features](#features)
-- [Tech stack](#tech-stack)
-- [Project structure](#project-structure)
+- [Technology stack](#technology-stack)
 - [Prerequisites](#prerequisites)
 - [Quick start](#quick-start)
 - [Using the application](#using-the-application)
 - [API reference](#api-reference)
+- [Project structure](#project-structure)
 - [Contributing](#contributing)
 - [Changelog](#changelog)
 - [License](#license)
 
 ---
 
-## Overview
+## Introduction
 
-The application exposes a simple UI (JSP) and a RESTful API for managing employees.  
-User accounts are stored in the same SQLite database, and sessions are handled with HTTP cookies.
+The application offers both a user‑friendly JSP UI and a RESTful API for managing employees.  
+It uses a single SQLite database to store user accounts and employee records, and handles sessions via HTTP cookies.
 
-Use it either as a stand‑alone web app or as a library to embed a minimal servlet engine into another project.
+You can run it as a stand‑alone web application or embed the servlet container into another project.
 
 ---
 
 ## Features
 
-- **User registration, login and session management** via cookies.
+- **User management** – register, log in, and maintain sessions with cookies.
 - **RESTful CRUD API** for `/employees`.
-- **Automatic database schema creation** on first run.
-- **Standalone deployment** – a single fat JAR, or run locally with the embedded Tomcat Maven plugin.
+- **Automatic schema initialization** when the application starts.
+- **Standalone deployment** – a fat JAR or Maven’s Tomcat plugin.
 - **JSP UI** for registration, login, and employee CRUD.
 
 ---
 
-## Tech stack
+## Technology stack
 
 | Category | Technology |
-| -------- | --------- |
+| -------- | ---------- |
 | Language | Java 8 (compatible with newer JDKs) |
 | Web server | Embedded Tomcat 7 |
 | Servlet API | `javax.servlet` |
@@ -59,13 +59,68 @@ Use it either as a stand‑alone web app or as a library to embed a minimal serv
 
 ---
 
+## Prerequisites
+
+- JDK 8 or newer
+- Maven 3+ (or use the provided wrapper)
+- Git (for cloning)
+
+---
+
+## Quick start
+
+```bash
+# Clone the repository
+git clone https://github.com/shubhyagami/employee.git
+cd employee
+
+# Build a fat JAR
+mvn clean package
+
+# Run with the embedded Tomcat Maven plugin
+mvn tomcat7:run
+```
+
+Or run the pre‑built JAR directly:
+
+```bash
+java -jar target/employee-jar-with-dependencies.jar
+```
+
+The web UI is available at `http://localhost:8080/EmployeeManagementSystem/`.
+
+---
+
+## Using the application
+
+1. Open the landing page in a browser.  
+2. Register a new user via **reg.jsp**.  
+3. Log in with the new account using **sign.jsp**.  
+4. Use the UI or the `/employees` REST endpoint to create, read, update, or delete employee records.
+
+### REST API
+
+All responses are JSON. For `POST`, `PUT`, and `DELETE` requests authentication is required; a session cookie is set after a successful login.
+
+| Method | Endpoint          | Description                    |
+| ------ | ----------------- | ------------------------------ |
+| GET    | `/employees`      | List all employees             |
+| POST   | `/employees`      | Create a new employee          |
+| PUT    | `/employees/{id}` | Update an existing employee    |
+| DELETE | `/employees/{id}` | Delete an employee             |
+
+You can authenticate by sending the session cookie returned from `/login`.  
+If you extend the project, you may also use an `Authorization: Bearer <token>` header.
+
+---
+
 ## Project structure
 
 ```
 employee/
-├── pom.xml                # Maven build file
-├── mvnw                   # Maven wrapper (Unix)
-├── mvnw.cmd                # Maven wrapper (Windows)
+├── pom.xml              # Maven build file
+├── mvnw                 # Maven wrapper (Unix)
+├── mvnw.cmd             # Maven wrapper (Windows)
 ├── .gitignore
 ├── README.md
 ├── LICENSE
@@ -91,81 +146,26 @@ The application context is defined in `WEB-INF/web.xml`. By default it is served
 
 ---
 
-## Prerequisites
-
-- JDK 8 (or newer)
-- Maven 3+
-- Git
-
----
-
-## Quick start
-
-```bash
-# Clone the repo
-git clone https://github.com/shubhyagami/employee.git
-cd employee
-
-# Build the fat JAR
-mvn clean package
-
-# Run with the embedded Tomcat
-mvn tomcat7:run
-```
-
-**Or** run the pre‑built JAR directly:
-
-```bash
-java -jar target/employee-jar-with-dependencies.jar
-```
-
-The web UI will be available at `http://localhost:8080/EmployeeManagementSystem/`.
-
----
-
-## Using the application
-
-1. Open the landing page in a browser.  
-2. Register a new user via **reg.jsp**.  
-3. Log in with the new account using **sign.jsp**.  
-4. Use the UI or the `/employees` REST endpoint to create, read, update, or delete employee records.
-
----
-
-## API reference
-
-All responses are JSON. For `POST`, `PUT` and `DELETE` authentication is required. A session cookie is set after a successful login.
-
-| Method | Endpoint            | Description                          |
-|--------|----------------------|--------------------------------------|
-| GET    | `/employees`        | List all employees                    |
-| POST   | `/employees`        | Create a new employee                |
-| PUT    | `/employees/{id}`   | Update an existing employee           |
-| DELETE | `/employees/{id}`   | Delete an employee                    |
-
-You can authenticate by sending the session cookie returned from `/login` or, if you extend the project, with an `Authorization: Bearer <token>` header.
-
----
-
 ## Contributing
 
-Pull requests are welcome. Before submitting:
+Pull requests are welcome! Please follow these guidelines:
 
 1. Run the test suite: `mvn test`.  
-2. Follow the existing naming and indentation conventions.  
-3. Update the documentation if you add or change features.
+2. Keep the code style consistent with the existing conventions.  
+3. Update the documentation if you add or modify features.  
+4. Describe your changes clearly in the commit message and pull request description.
 
-If you encounter an issue, feel free to open one with a clear description and, if possible, a minimal reproducible example.
+If you encounter a problem, open an issue with a concise description and, if possible, a minimal reproducible example.
 
 ---
 
 ## Changelog
 
-- **2026‑09‑04** – Updated README, cleaned up wording, and added a concise feature list.  
+- **2026‑09‑04** – Updated README, cleaned wording, added concise feature list.  
 - **2026‑09‑03** – Minor documentation cleanup.  
-- **2026‑09‑02** – Reorganised sections.  
+- **2026‑09‑02** – Reorganized sections.  
 - **2026‑08‑21** – Minor wording edits.  
-- **2026‑08‑12** – Added tech‑stack table.  
+- **2026‑08‑12** – Added tech‑stack table.
 
 ---
 
