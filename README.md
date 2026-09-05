@@ -3,10 +3,10 @@
 A lightweight Java web application that stores employee data in an embedded SQLite database and runs on an embedded Tomcat server.  
 Build a single fat JAR with Maven or use the Maven wrapper – no external servers are required.
 
-![Java 8](https://img.shields.io/badge/Java-8-blue?logo=java)  
-![Maven 3+](https://img.shields.io/badge/Maven-3%2B-red?logo=maven)  
-![SQLite 3.45.1](https://img.shields.io/badge/SQLite-3.45.1-orange?logo=sqlite)  
-![Tomcat 7](https://img.shields.io/badge/Tomcat-7-orange?logo=apache-tomcat)  
+![Java 8](https://img.shields.io/badge/Java-8-blue?logo=java)  
+![Maven 3+](https://img.shields.io/badge/Maven-3%2B-red?logo=maven)  
+![SQLite 3.45.1](https://img.shields.io/badge/SQLite-3.45.1-orange?logo=sqlite)  
+![Tomcat 7](https://img.shields.io/badge/Tomcat-7-orange?logo=apache-tomcat)  
 ![MIT License](https://img.shields.io/badge/License-MIT-yellow?logo=opensourceinitiative)
 
 ---
@@ -14,12 +14,13 @@ Build a single fat JAR with Maven or use the Maven wrapper – no external serve
 ## Table of contents
 
 - [Introduction](#introduction)
+- [Getting started](#getting-started)
 - [Features](#features)
 - [Technology stack](#technology-stack)
 - [Prerequisites](#prerequisites)
 - [Quick start](#quick-start)
 - [Using the application](#using-the-application)
-- [API reference](#api-reference)
+- [REST API](#rest-api)
 - [Project structure](#project-structure)
 - [Contributing](#contributing)
 - [Changelog](#changelog)
@@ -29,40 +30,47 @@ Build a single fat JAR with Maven or use the Maven wrapper – no external serve
 
 ## Introduction
 
-The application offers both a user‑friendly JSP UI and a RESTful API for managing employees.  
-It uses a single SQLite database to store user accounts and employee records, and handles sessions via HTTP cookies.
+The Employee Management System is a small, self‑contained Java web app that combines a JSP‑based UI with a RESTful API.  
+The data layer uses an embedded SQLite database that is automatically initialized on first run.  
+Sessions are handled with HTTP cookies, allowing the API and the UI to be used side‑by‑side.
 
-You can run it as a stand‑alone web application or embed the servlet container into another project.
+---
+
+## Getting started
+
+1. **Clone the repository**  
+2. **Build** a fat JAR or run the embedded Tomcat server.  
+3. **Access** the UI at `http://localhost:8080/EmployeeManagementSystem/` and the API at `http://localhost:8080/EmployeeManagementSystem/employees`.
 
 ---
 
 ## Features
 
-- **User management** – register, log in, and maintain sessions with cookies.
-- **RESTful CRUD API** for `/employees`.
-- **Automatic schema initialization** when the application starts.
-- **Standalone deployment** – a fat JAR or Maven’s Tomcat plugin.
-- **JSP UI** for registration, login, and employee CRUD.
+- **User management** – register, log in, maintain sessions via cookies.  
+- **RESTful CRUD** API for `/employees`.  
+- **Automatic schema initialization** on startup.  
+- **Standalone deployment** – a fat JAR or Maven’s Tomcat plugin.  
+- **JSP UI** for registration, login, and employee CRUD.  
 
 ---
 
 ## Technology stack
 
 | Category | Technology |
-| -------- | ---------- |
-| Language | Java 8 (compatible with newer JDKs) |
-| Web server | Embedded Tomcat 7 |
-| Servlet API | `javax.servlet` |
+|----------|------------|
+| Language | Java 8 (works with later JDKs) |
+| Server   | Embedded Tomcat 7 |
+| Servlet  | `javax.servlet` |
 | Database | SQLite 3.45.1 |
-| Build tool | Maven 3+ |
-| Front‑end | JSP, HTML, CSS |
+| Build    | Maven 3+ |
+| Front‑end| JSP, HTML, CSS |
 
 ---
 
 ## Prerequisites
 
 - JDK 8 or newer
-- Maven 3+ (or use the provided wrapper)
+- Maven 3+ (or the provided wrapper)
 - Git (for cloning)
 
 ---
@@ -87,7 +95,7 @@ Or run the pre‑built JAR directly:
 java -jar target/employee-jar-with-dependencies.jar
 ```
 
-The web UI is available at `http://localhost:8080/EmployeeManagementSystem/`.
+The web UI is now available at `http://localhost:8080/EmployeeManagementSystem/`.
 
 ---
 
@@ -98,19 +106,34 @@ The web UI is available at `http://localhost:8080/EmployeeManagementSystem/`.
 3. Log in with the new account using **sign.jsp**.  
 4. Use the UI or the `/employees` REST endpoint to create, read, update, or delete employee records.
 
-### REST API
+### Authentication
 
-All responses are JSON. For `POST`, `PUT`, and `DELETE` requests authentication is required; a session cookie is set after a successful login.
+After a successful login the server sets a `JSESSIONID` cookie.  
+All `POST`, `PUT`, and `DELETE` requests to the API require this cookie.  
+If you extend the project you can also add an `Authorization: Bearer <token>` header.
 
-| Method | Endpoint          | Description                    |
-| ------ | ----------------- | ------------------------------ |
-| GET    | `/employees`      | List all employees             |
-| POST   | `/employees`      | Create a new employee          |
-| PUT    | `/employees/{id}` | Update an existing employee    |
-| DELETE | `/employees/{id}` | Delete an employee             |
+---
 
-You can authenticate by sending the session cookie returned from `/login`.  
-If you extend the project, you may also use an `Authorization: Bearer <token>` header.
+## REST API
+
+All responses from the API are JSON.
+
+| Method | Endpoint          | Purpose |
+|--------|------------------|---------|
+| GET    | `/employees`     | List all employees |
+| POST   | `/employees`     | Create a new employee |
+| PUT    | `/employees/{id}`| Update an existing employee |
+| DELETE | `/employees/{id}`| Delete an employee |
+
+Example request to create an employee:
+
+```bash
+curl -X POST \
+  http://localhost:8080/EmployeeManagementSystem/employees \
+  -H 'Content-Type: application/json' \
+  -b 'JSESSIONID=...' \
+  -d '{"name":"Alice","role":"Developer","salary":70000}'
+```
 
 ---
 
@@ -118,9 +141,9 @@ If you extend the project, you may also use an `Authorization: Bearer <token>` h
 
 ```
 employee/
-├── pom.xml              # Maven build file
-├── mvnw                 # Maven wrapper (Unix)
-├── mvnw.cmd             # Maven wrapper (Windows)
+├── pom.xml                     # Maven build file
+├── mvnw                        # Maven wrapper (Unix)
+├── mvnw.cmd                    # Maven wrapper (Windows)
 ├── .gitignore
 ├── README.md
 ├── LICENSE
@@ -142,7 +165,8 @@ employee/
             └── check.jsp
 ```
 
-The application context is defined in `WEB-INF/web.xml`. By default it is served at `http://localhost:8080/EmployeeManagementSystem/`.
+The application’s context path is defined in `WEB-INF/web.xml`. By default it is served at  
+`http://localhost:8080/EmployeeManagementSystem/`.
 
 ---
 
