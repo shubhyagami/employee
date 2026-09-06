@@ -1,6 +1,6 @@
 # Employee Management System
 
-A lightweight Java web application that stores employee data in an embedded SQLite database and runs on an embedded Tomcat 7 server.  
+A lightweight Java web application that stores employee data in an embedded SQLite database and runs on an embedded Tomcat 7 server.  
 Build a single fat JAR with Maven or use the Maven wrapper – no external servers are required.
 
 ![Java 8+](https://img.shields.io/badge/Java-8%2B-blue?logo=java)
@@ -11,14 +11,27 @@ Build a single fat JAR with Maven or use the Maven wrapper – no external serve
 
 ---
 
+## Quick start
+
+```bash
+git clone https://github.com/shubhyagami/employee.git
+cd employee
+mvn clean package
+java -jar target/employee-jar-with-dependencies.jar
+```
+
+Open `http://localhost:8080/EmployeeManagementSystem/` in your browser and you’re ready to go.
+
+---
+
 ## Table of contents
 
-- [Introduction](#introduction)
+- [Overview](#overview)
 - [Getting started](#getting-started)
 - [Features](#features)
 - [Technology stack](#technology-stack)
 - [Prerequisites](#prerequisites)
-- [Running the application](#running-the-application)
+- [Build and run](#build-and-run)
 - [Using the application](#using-the-application)
 - [REST API](#rest-api)
 - [Project structure](#project-structure)
@@ -29,11 +42,11 @@ Build a single fat JAR with Maven or use the Maven wrapper – no external serve
 
 ---
 
-## Introduction
+## Overview
 
-The Employee Management System is a self‑contained Java web application that combines a JSP‑based UI with a RESTful API.  
-It uses an embedded SQLite database that is automatically initialized on first run.  
-Sessions are handled with HTTP cookies, allowing the API and the UI to work side‑by‑side.
+The Employee Management System is a self‑contained Java web application that offers both a JSP‑based UI and a RESTful API.  
+It uses an embedded SQLite database, automatically initialized on the first run.  
+User sessions are handled with HTTP cookies, allowing the UI and the API to share authentication state.
 
 ---
 
@@ -61,7 +74,7 @@ cd employee
 
 | Category | Technology |
 |----------|------------|
-| Language | Java 8 (works with later JDKs) |
+| Language | Java 8 (compatible with later JDKs) |
 | Server   | Embedded Tomcat 7 |
 | Servlet  | `javax.servlet` |
 | Database | SQLite 3.45.1 |
@@ -78,29 +91,24 @@ cd employee
 
 ---
 
-## Running the application
+## Build and run
 
-Build a fat JAR:
+### Option 1 – Fat JAR
 
 ```bash
 mvn clean package
-```
-
-The JAR contains an embedded Tomcat server and the SQLite database:
-
-```bash
 java -jar target/employee-jar-with-dependencies.jar
 ```
 
-The web UI is available at `http://localhost:8080/EmployeeManagementSystem/`.
+The application is then available at `http://localhost:8080/EmployeeManagementSystem/`.
 
-Alternatively, run the application using the embedded Tomcat Maven plugin:
+### Option 2 – Embedded Tomcat Maven plugin
 
 ```bash
 mvn tomcat7:run
 ```
 
-You can also use the Maven wrapper scripts:
+You can use the Maven wrapper scripts instead:
 
 ```bash
 ./mvnw clean package
@@ -119,21 +127,21 @@ You can also use the Maven wrapper scripts:
 ### Authentication
 
 After a successful login the server sets a `JSESSIONID` cookie.  
-All `POST`, `PUT`, and `DELETE` requests to the API require this cookie.  
-You may also add an `Authorization: Bearer <token>` header if you extend the project.
+All `POST`, `PUT`, and `DELETE` requests to the API must include this cookie.  
+(If you extend the project you may also use an `Authorization: Bearer <token>` header.)
 
 ---
 
 ## REST API
 
-All API responses are JSON.
+All responses are JSON.
 
-| Method | Endpoint          | Purpose                     |
-|--------|-------------------|-----------------------------|
-| GET    | `/employees`     | List all employees         |
-| POST   | `/employees`     | Create a new employee       |
+| Method | Endpoint          | Purpose            |
+|--------|-------------------|---------------------|
+| GET    | `/employees`      | List all employees  |
+| POST   | `/employees`      | Create a new employee |
 | PUT    | `/employees/{id}` | Update an existing employee |
-| DELETE | `/employees/{id}` | Delete an employee       |
+| DELETE | `/employees/{id}` | Delete an employee |
 
 **Create employee example**
 
