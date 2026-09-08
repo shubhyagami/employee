@@ -1,44 +1,29 @@
 # Employee Management System
 
-A lightweight Java web application that stores employee data in an embedded SQLite database and runs on an embedded Tomcat 7 server. It bundles everything into a single fat JAR, so no external server is needed.
+A lightweight Java web application that stores employee data in an embedded SQLite database and runs on an embedded Tomcat 7 server.  
+Everything is bundled into a single “fat” JAR, so no external application server is required.
 
-![Java 8+](https://img.shields.io/badge/Java-8%2B-blue?logo=java)  
-![Maven 3+](https://img.shields.io/badge/Maven-3%2B-red?logo=maven)  
-![SQLite 3.45.1](https://img.shields.io/badge/SQLite-3.45.1-orange?logo=sqlite)  
-![Tomcat 7](https://img.shields.io/badge/Tomcat-7-orange?logo=apache-tomcat)  
-![MIT License](https://img.shields.io/badge/License-MIT-yellow?logo=opensourceinitiative)
-
----
-
-## Quick start
-
-```bash
-git clone https://github.com/shubhyagami/employee.git
-cd employee
-mvn clean package
-java -jar target/employee-jar-with-dependencies.jar
-```
-
-Open [http://localhost:8080/EmployeeManagementSystem/](http://localhost:8080/EmployeeManagementSystem/) in your browser.
-
-> **Tip** – You can also run the app directly from Maven:
-
-```bash
-mvn tomcat7:run
-```
+![Java 8+](https://img.shields.io/badge/Java-8%2B-blue?logo=java)  
+![Maven 3+](https://img.shields.io/badge/Maven-3%2B-red?logo=maven)  
+![SQLite 3.45.1](https://img.shields.io/badge/SQLite-3.45.1-orange?logo=sqlite)  
+![Tomcat 7](https://img.shields.io/badge/Tomcat-7-orange?logo=apache-tomcat)  
+![MIT License](https://img.shields.io/badge/License-MIT-yellow?logo=opensourceinitiative)  
+![GitHub Actions](https://github.com/shubhyagami/employee/actions/workflows/maven.yml/badge.svg)
 
 ---
 
 ## Table of contents
 
 - [Overview](#overview)
-- [Quick start](#quick-start)
 - [Features](#features)
-- [Technology stack](#technology-stack)
+- [Technical stack](#technical-stack)
 - [Prerequisites](#prerequisites)
-- [Build and run](#build-and-run)
+- [Getting started](#getting-started)
+  - [Build & run](#build--run)
+  - [Deploy with Maven](#deploy-with-maven)
 - [Using the application](#using-the-application)
-- [REST API](#rest-api)
+  - [Web UI](#web-ui)
+  - [REST API](#rest-api)
 - [Project structure](#project-structure)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
@@ -51,62 +36,68 @@ mvn tomcat7:run
 
 The **Employee Management System** is a self‑contained Java web app that provides:
 
-- A JSP‑based user interface for CRUD operations.
-- A RESTful API (`/employees`) for programmatic access.
-- Automatic schema creation in an embedded SQLite database on first run.
-- Session handling via HTTP cookies (`JSESSIONID`), allowing the UI and API to share authentication state.
+* A JSP‑based user interface for CRUD operations on employees.
+* A RESTful API (`/employees`) that can be used programmatically.
+* Automatic SQLite database schema creation on first run.
+* Session management via HTTP cookies (`JSESSIONID`), allowing the UI and API to share authentication state.
 
 ---
 
 ## Features
 
-- **User management** – register, login, and maintain sessions through cookies.
-- **RESTful CRUD API** – `GET /employees`, `POST /employees`, `PUT /employees/{id}`, `DELETE /employees/{id}`.
-- **Automatic database initialization** – the schema is created on first start.
-- **Standalone deployment** – a single fat JAR or run via the Maven Tomcat plugin.
-- **JSP UI** – intuitive web pages for user and employee management.
+| Feature | Description |
+|---------|-------------|
+| **User authentication** | Register, log in, and maintain sessions via cookies. |
+| **CRUD UI** | Intuitive JSP pages to create, read, update, and delete employees. |
+| **REST API** | `GET /employees`, `POST /employees`, `PUT /employees/{id}`, `DELETE /employees/{id}`. |
+| **Embedded server** | Runs on a bundled Tomcat 7, no external deployment needed. |
+| **Database initialization** | The SQLite schema is created automatically on first start. |
 
 ---
 
-## Technology stack
+## Technical stack
 
-| Category      | Technology |
-|---------------|-----------|
-| Language      | Java 8+ |
-| Server        | Embedded Tomcat 7 |
-| Servlet API   | `javax.servlet` |
-| Database      | SQLite 3.45.1 |
-| Build tool    | Maven 3+ |
-| Front‑end     | JSP, HTML, CSS |
+| Category | Technology |
+|----------|------------|
+| Language | Java 8+ |
+| Server | Embedded Tomcat 7 |
+| Servlet API | `javax.servlet` |
+| Database | SQLite 3.45.1 |
+| Build tool | Maven 3+ |
+| Front‑end | JSP, HTML, CSS |
 
 ---
 
 ## Prerequisites
 
-- JDK 8 or newer
-- Maven 3+ (or the included wrapper scripts)
-- Git (for cloning)
+* JDK 8 or newer (`java -version` should show 1.8.x or higher)
+* Maven 3+ (`mvn -version`)
+* Git (for cloning)
 
 ---
 
-## Build and run
+## Getting started
 
-### Option 1 – Fat JAR
+### Build & run
 
 ```bash
+git clone https://github.com/shubhyagami/employee.git
+cd employee
 mvn clean package
 java -jar target/employee-jar-with-dependencies.jar
 ```
 
-The application is now available at `http://localhost:8080/EmployeeManagementSystem/`.
+The application will be available at `http://localhost:8080/EmployeeManagementSystem/`.
 
-### Option 2 – Embedded Tomcat Maven plugin
+### Deploy with Maven
+
+If you prefer not to build the JAR, you can run the app directly from Maven:
 
 ```bash
 mvn tomcat7:run
 ```
 
-You can also use the Maven wrapper:
+Or, if you use the wrapper scripts:
 
 ```bash
 ./mvnw clean package
@@ -117,31 +108,25 @@ You can also use the Maven wrapper:
 
 ## Using the application
 
-1. Open `http://localhost:8080/EmployeeManagementSystem/` in a browser.  
-2. Register a new user via **reg.jsp** (or **register.jsp**).  
-3. Log in with your credentials using **sign.jsp**.  
-4. Use the UI or the `/employees` REST endpoint to create, read, update, or delete employee records.
+### Web UI
 
-### Authentication
+1. Open <http://localhost:8080/EmployeeManagementSystem/> in a browser.  
+2. Register a new user on **reg.jsp** (or **register.jsp**).  
+3. Log in via **sign.jsp**.  
+4. Use the UI to manage employee records.
 
-After a successful login, the server sets a `JSESSIONID` cookie.  
-All `POST`, `PUT`, and `DELETE` requests to the API must include this cookie.  
-(If you extend the project, you can also implement an `Authorization: Bearer <token>` header.)
+### REST API
 
----
+All responses are JSON. The endpoint is relative to the context path:
 
-## REST API
+| Method | Endpoint | Purpose |
+|--------|----------|---------|
+| `GET` | `/employees` | List all employees |
+| `POST` | `/employees` | Create a new employee |
+| `PUT` | `/employees/{id}` | Update an existing employee |
+| `DELETE` | `/employees/{id}` | Delete an employee |
 
-All responses are JSON.
-
-| Method | Endpoint          | Purpose                                 |
-|--------|-------------------|------------------------------------------|
-| GET    | `/employees`      | List all employees                       |
-| POST   | `/employees`      | Create a new employee                     |
-| PUT    | `/employees/{id}` | Update an existing employee              |
-| DELETE | `/employees/{id}` | Delete an employee                       |
-
-**Create employee example**
+**Create‑employee example**
 
 ```bash
 curl -X POST \
@@ -151,14 +136,17 @@ curl -X POST \
   -d '{"name":"Alice","role":"Developer","salary":70000}'
 ```
 
+**Authentication**  
+After logging in, the server sets a `JSESSIONID` cookie. Include this cookie with every `POST`, `PUT`, or `DELETE` request (via `-b` in `curl` or `withCredentials` in browsers). Optionally, you may implement an `Authorization: Bearer <token>` header in the future.
+
 ---
 
 ## Project structure
 
 ```
 employee/
-├── pom.xml                       # Maven build file
-├── mvnw / mvnw.cmd               # Maven wrapper scripts
+├── pom.xml
+├── mvnw / mvnw.cmd
 ├── .gitignore
 ├── README.md
 ├── LICENSE
@@ -180,8 +168,7 @@ employee/
             └── check.jsp
 ```
 
-The application’s context path is defined in `WEB-INF/web.xml`.  
-By default it is served at `http://localhost:8080/EmployeeManagementSystem/`.
+The context path is defined in `WEB-INF/web.xml` and defaults to `EmployeeManagementSystem`.
 
 ---
 
@@ -189,32 +176,32 @@ By default it is served at `http://localhost:8080/EmployeeManagementSystem/`.
 
 | Issue | Fix |
 |-------|-----|
-| `java: invalid source release 8` | Ensure `JAVA_HOME` points to a JDK ≥ 8 and that `mvn -version` reports the correct Java version. |
-| Database file not created | Verify the project directory has write permissions. |
-| `JSESSIONID` missing on API call | Make sure the cookie is sent with your HTTP client (e.g., `-b 'JSESSIONID=...'` in `curl`). |
+| `java: invalid source release 8` | Verify `JAVA_HOME` points to a JDK ≥ 8 and run `mvn -version`. |
+| Database file not created | Ensure the working directory is writable. |
+| `JSESSIONID` missing on API call | Send the cookie with your HTTP client (e.g., `-b 'JSESSIONID=...'` in `curl`). |
 
 ---
 
 ## Contributing
 
-Pull requests are welcome! Please follow these steps:
+Pull requests are welcome! Please:
 
 1. Run the test suite: `mvn test`.  
-2. Keep the coding style consistent with the existing code.  
-3. Update documentation if you add or modify functionality.  
+2. Follow the existing coding style.  
+3. Update documentation when adding or changing functionality.  
 4. Write clear commit messages and PR descriptions.
 
-If you encounter a problem, open an issue with a concise description and, if possible, a minimal reproducible example.
+If you run into a problem, open an issue with a concise description and, if possible, a minimal reproducible example.
 
 ---
 
 ## Changelog
 
-- **2026‑09‑04** – Updated README, cleaned wording, added concise feature list.  
-- **2026‑09‑03** – Minor documentation cleanup.  
-- **2026‑09‑02** – Reorganized sections.  
-- **2026‑08‑21** – Minor wording edits.  
-- **2026‑08‑12** – Added tech‑stack table.
+* 2026‑09‑04 – Updated README, cleaned wording, added concise feature list.  
+* 2026‑09‑03 – Minor documentation cleanup.  
+* 2026‑09‑02 – Reorganized sections.  
+* 2026‑08‑21 – Minor wording edits.  
+* 2026‑08‑12 – Added tech‑stack table.
 
 ---
 
