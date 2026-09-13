@@ -1,14 +1,14 @@
 # Employee Management System
 
-A lightweight Java web application that stores employee data in an embedded SQLite database and runs on an embedded Tomcat 7 server.  
-Everything is bundled into a single “fat” JAR, so no external application server is required.
+A lightweight Java web application that stores employee data in an embedded SQLite database and runs on a bundled Tomcat 7 server.  
+Everything is packaged in a single “fat” JAR – no external application server is required.
 
 ![Java 8+](https://img.shields.io/badge/Java-8%2B-blue?logo=java)  
 ![Maven 3+](https://img.shields.io/badge/Maven-3%2B-red?logo=maven)  
 ![SQLite 3.45.1](https://img.shields.io/badge/SQLite-3.45.1-orange?logo=sqlite)  
 ![Tomcat 7](https://img.shields.io/badge/Tomcat-7-orange?logo=apache-tomcat)  
 ![MIT License](https://img.shields.io/badge/License-MIT-yellow?logo=opensourceinitiative)  
-![GitHub Actions](https://github.com/shubhyagami/employee/actions/workflows/maven.yml/badge.svg)
+![CI](https://github.com/shubhyagami/employee/actions/workflows/maven.yml/badge.svg)
 
 ---
 
@@ -18,9 +18,7 @@ Everything is bundled into a single “fat” JAR, so no external application se
 - [Features](#features)
 - [Technical stack](#technical-stack)
 - [Prerequisites](#prerequisites)
-- [Getting started](#getting-started)
-  - [Build & run](#build--run)
-  - [Deploy with Maven](#deploy-with-maven)
+- [Quick start](#quick-start)
 - [Using the application](#using-the-application)
   - [Web UI](#web-ui)
   - [REST API](#rest-api)
@@ -34,31 +32,31 @@ Everything is bundled into a single “fat” JAR, so no external application se
 
 ## Overview
 
-The **Employee Management System** is a self‑contained Java web app that provides:
+The **Employee Management System** is a self‑contained Java web app that offers:
 
-* A JSP‑based user interface for CRUD operations on employees.
-* A RESTful API (`/employees`) that can be used programmatically.
-* Automatic SQLite database schema creation on first run.
-* Session management via HTTP cookies (`JSESSIONID`), allowing the UI and API to share authentication state.
+* A JSP‑based UI for creating, reading, updating, and deleting employee records.
+* A RESTful API (`/employees`) for programmatic access.
+* Automatic creation of the SQLite schema on first run.
+* Session management via HTTP cookies (`JSESSIONID`), shared between UI and API.
 
 ---
 
 ## Features
 
-| Feature | Description |
-|---------|-------------|
-| **User authentication** | Register, log in, and maintain sessions via cookies. |
-| **CRUD UI** | Intuitive JSP pages to create, read, update, and delete employees. |
-| **REST API** | `GET /employees`, `POST /employees`, `PUT /employees/{id}`, `DELETE /employees/{id}`. |
-| **Embedded server** | Runs on a bundled Tomcat 7, no external deployment needed. |
-| **Database initialization** | The SQLite schema is created automatically on first start. |
+| Feature | What it does |
+|---------|--------------|
+| **User authentication** | Register, log in, and maintain a session. |
+| **CRUD UI** | Simple JSP pages to manage employees. |
+| **REST API** | Standard endpoints for CRUD operations. |
+| **Embedded server** | Runs on a bundled Tomcat 7 – no external deployment. |
+| **Database initialization** | SQLite schema is created automatically on first launch. |
 
 ---
 
 ## Technical stack
 
 | Category | Technology |
-|----------|------------|
+|----------|-----------|
 | Language | Java 8+ |
 | Server | Embedded Tomcat 7 |
 | Servlet API | `javax.servlet` |
@@ -70,36 +68,33 @@ The **Employee Management System** is a self‑contained Java web app that provi
 
 ## Prerequisites
 
-* JDK 8 or newer (`java -version` should show 1.8.x or higher)
+* JDK 8 or newer (`java -version` shows 1.8.x or higher)
 * Maven 3+ (`mvn -version`)
-* Git (for cloning)
+* Git (to clone the repository)
 
 ---
 
-## Getting started
-
-### Build & run
+## Quick start
 
 ```bash
+# Clone the repo
 git clone https://github.com/shubhyagami/employee.git
 cd employee
+
+# Build the executable JAR
 mvn clean package
+
+# Run the application
 java -jar target/employee-jar-with-dependencies.jar
 ```
 
-The application will be available at `http://localhost:8080/EmployeeManagementSystem/`.
+The app is available at `http://localhost:8080/EmployeeManagementSystem/`.
 
-### Deploy with Maven
-
-If you prefer not to build the JAR, you can run the app directly from Maven:
+If you prefer to run it directly from Maven:
 
 ```bash
 mvn tomcat7:run
-```
-
-Or, if you use the wrapper scripts:
-
-```bash
+# or with the wrapper scripts
 ./mvnw clean package
 ./mvnw tomcat7:run
 ```
@@ -113,20 +108,20 @@ Or, if you use the wrapper scripts:
 1. Open <http://localhost:8080/EmployeeManagementSystem/> in a browser.  
 2. Register a new user on **reg.jsp** (or **register.jsp**).  
 3. Log in via **sign.jsp**.  
-4. Use the UI to manage employee records.
+4. Use the UI to add, edit, or delete employees.
 
 ### REST API
 
-All responses are JSON. The endpoint is relative to the context path:
+All responses are JSON. The API base path is relative to the context path.
 
-| Method | Endpoint | Purpose |
-|--------|----------|---------|
-| `GET` | `/employees` | List all employees |
-| `POST` | `/employees` | Create a new employee |
-| `PUT` | `/employees/{id}` | Update an existing employee |
-| `DELETE` | `/employees/{id}` | Delete an employee |
+| Method | Endpoint           | Purpose                        |
+|--------|--------------------|---------------------------------|
+| GET    | `/employees`       | List all employees              |
+| POST   | `/employees`       | Create a new employee           |
+| PUT    | `/employees/{id}`   | Update an existing employee     |
+| DELETE | `/employees/{id}`   | Delete an employee             |
 
-**Create‑employee example**
+**Example – create an employee**
 
 ```bash
 curl -X POST \
@@ -136,8 +131,7 @@ curl -X POST \
   -d '{"name":"Alice","role":"Developer","salary":70000}'
 ```
 
-**Authentication**  
-After logging in, the server sets a `JSESSIONID` cookie. Include this cookie with every `POST`, `PUT`, or `DELETE` request (via `-b` in `curl` or `withCredentials` in browsers). Optionally, you may implement an `Authorization: Bearer <token>` header in the future.
+Authentication is cookie based. Log in, note the `JSESSIONID` cookie, and include it in subsequent writes (`POST`, `PUT`, `DELETE`). Future versions may support token‑based auth.
 
 ---
 
@@ -174,11 +168,11 @@ The context path is defined in `WEB-INF/web.xml` and defaults to `EmployeeManage
 
 ## Troubleshooting
 
-| Issue | Fix |
-|-------|-----|
-| `java: invalid source release 8` | Verify `JAVA_HOME` points to a JDK ≥ 8 and run `mvn -version`. |
-| Database file not created | Ensure the working directory is writable. |
-| `JSESSIONID` missing on API call | Send the cookie with your HTTP client (e.g., `-b 'JSESSIONID=...'` in `curl`). |
+| Symptom | Fix |
+|---------|-----|
+| `java: invalid source release 8` | Ensure `JAVA_HOME` points to a JDK ≥ 8 and `mvn -version` shows the correct JDK. |
+| Database file not created | The directory where the JAR is executed must be writable. |
+| `JSESSIONID` missing on API call | Be sure to send the cookie (`-b 'JSESSIONID=...'` with `curl` or `withCredentials` in browsers). |
 
 ---
 
@@ -186,22 +180,20 @@ The context path is defined in `WEB-INF/web.xml` and defaults to `EmployeeManage
 
 Pull requests are welcome! Please:
 
-1. Run the test suite: `mvn test`.  
-2. Follow the existing coding style.  
-3. Update documentation when adding or changing functionality.  
+1. Run the tests: `mvn test`.  
+2. Follow the existing style.  
+3. Update documentation if you add or modify features.  
 4. Write clear commit messages and PR descriptions.
 
-If you run into a problem, open an issue with a concise description and, if possible, a minimal reproducible example.
+If you hit a bug, open an issue with a brief description and, if possible, a minimal reproducible example.
 
 ---
 
 ## Changelog
 
-* 2026‑09‑04 – Updated README, cleaned wording, added concise feature list.  
-* 2026‑09‑03 – Minor documentation cleanup.  
-* 2026‑09‑02 – Reorganized sections.  
-* 2026‑08‑21 – Minor wording edits.  
-* 2026‑08‑12 – Added tech‑stack table.
+* **2026‑09‑13** – Minor README cleanup, added concise feature list.  
+* **2026‑09‑04** – Updated badges and table of contents.  
+* **2026‑08‑12** – Added tech‑stack table.
 
 ---
 
