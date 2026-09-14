@@ -18,7 +18,9 @@ Everything is packaged in a single “fat” JAR – no external application ser
 - [Features](#features)
 - [Technical stack](#technical-stack)
 - [Prerequisites](#prerequisites)
-- [Quick start](#quick-start)
+- [Getting started](#getting-started)
+  - [Build & run (plain JAR)](#build--run-plain-jar)
+  - [Build & run with Maven](#build--run-with-maven)
 - [Using the application](#using-the-application)
   - [Web UI](#web-ui)
   - [REST API](#rest-api)
@@ -32,31 +34,31 @@ Everything is packaged in a single “fat” JAR – no external application ser
 
 ## Overview
 
-The **Employee Management System** is a self‑contained Java web app that offers:
+**Employee Management System** is a self‑contained Java web app that offers:
 
-* A JSP‑based UI for creating, reading, updating, and deleting employee records.
-* A RESTful API (`/employees`) for programmatic access.
-* Automatic creation of the SQLite schema on first run.
-* Session management via HTTP cookies (`JSESSIONID`), shared between UI and API.
+- A JSP‑based UI for CRUD operations on employee records.
+- A RESTful API (`/employees`) for programmatic access.
+- Automatic SQLite schema creation on first run.
+- Session management via HTTP cookies (`JSESSIONID`), shared between UI and API.
+
+The application is deployed under the context path **EmployeeManagementSystem** by default, configured in `WEB-INF/web.xml`.
 
 ---
 
 ## Features
 
-| Feature | What it does |
-|---------|--------------|
-| **User authentication** | Register, log in, and maintain a session. |
-| **CRUD UI** | Simple JSP pages to manage employees. |
-| **REST API** | Standard endpoints for CRUD operations. |
-| **Embedded server** | Runs on a bundled Tomcat 7 – no external deployment. |
-| **Database initialization** | SQLite schema is created automatically on first launch. |
+- **User authentication** – register, login, and maintain a session.
+- **Employee CRUD** – create, read, update, delete employees.
+- **REST API** – standard endpoints for CRUD operations.
+- **Embedded server** – runs on bundled Tomcat 7; no external deployment needed.
+- **Database initialization** – SQLite schema is created automatically on first launch.
 
 ---
 
 ## Technical stack
 
 | Category | Technology |
-|----------|-----------|
+|---------|------------|
 | Language | Java 8+ |
 | Server | Embedded Tomcat 7 |
 | Servlet API | `javax.servlet` |
@@ -68,33 +70,46 @@ The **Employee Management System** is a self‑contained Java web app that offer
 
 ## Prerequisites
 
-* JDK 8 or newer (`java -version` shows 1.8.x or higher)
-* Maven 3+ (`mvn -version`)
-* Git (to clone the repository)
+| Tool | Minimum version | Check command |
+|------|------------------|---------------|
+| JDK | 8 or newer | `java -version` |
+| Maven | 3+ | `mvn -version` |
+| Git | – | `git --version` |
 
 ---
 
-## Quick start
+## Getting started
+
+The following instructions explain how to build the project and run the application locally.
+
+### Build & run (plain JAR)
 
 ```bash
-# Clone the repo
+# Clone the repository
 git clone https://github.com/shubhyagami/employee.git
 cd employee
 
-# Build the executable JAR
+# Build the fat JAR
 mvn clean package
 
 # Run the application
 java -jar target/employee-jar-with-dependencies.jar
 ```
 
-The app is available at `http://localhost:8080/EmployeeManagementSystem/`.
+Navigate to `http://localhost:8080/EmployeeManagementSystem/` to see the UI.
 
-If you prefer to run it directly from Maven:
+### Build & run with Maven
+
+If you prefer to run the application directly from Maven:
 
 ```bash
+# Start the bundled Tomcat
 mvn tomcat7:run
-# or with the wrapper scripts
+```
+
+or, if you use the Maven wrapper:
+
+```bash
 ./mvnw clean package
 ./mvnw tomcat7:run
 ```
@@ -108,18 +123,19 @@ mvn tomcat7:run
 1. Open <http://localhost:8080/EmployeeManagementSystem/> in a browser.  
 2. Register a new user on **reg.jsp** (or **register.jsp**).  
 3. Log in via **sign.jsp**.  
-4. Use the UI to add, edit, or delete employees.
+4. Use the UI pages to add, edit, or delete employees.
 
 ### REST API
 
-All responses are JSON. The API base path is relative to the context path.
+All responses are JSON. The API base path is relative to the context path.  
+Authentication is cookie based: log in first, then send the `JSESSIONID` cookie with each request.
 
-| Method | Endpoint           | Purpose                        |
-|--------|--------------------|---------------------------------|
-| GET    | `/employees`       | List all employees              |
-| POST   | `/employees`       | Create a new employee           |
-| PUT    | `/employees/{id}`   | Update an existing employee     |
-| DELETE | `/employees/{id}`   | Delete an employee             |
+| Method | Endpoint | Purpose |
+|--------|-----------|---------|
+| GET | `/employees` | List all employees |
+| POST | `/employees` | Create a new employee |
+| PUT | `/employees/{id}` | Update an existing employee |
+| DELETE | `/employees/{id}` | Delete an employee |
 
 **Example – create an employee**
 
@@ -131,7 +147,9 @@ curl -X POST \
   -d '{"name":"Alice","role":"Developer","salary":70000}'
 ```
 
-Authentication is cookie based. Log in, note the `JSESSIONID` cookie, and include it in subsequent writes (`POST`, `PUT`, `DELETE`). Future versions may support token‑based auth.
+Replace `JSESSIONID=...` with the cookie value obtained after logging in.
+
+> **Tip**: In browsers, enable “Include cookies” or use a helper extension like *ModHeader* to preserve authentication across requests.
 
 ---
 
@@ -168,32 +186,34 @@ The context path is defined in `WEB-INF/web.xml` and defaults to `EmployeeManage
 
 ## Troubleshooting
 
-| Symptom | Fix |
-|---------|-----|
-| `java: invalid source release 8` | Ensure `JAVA_HOME` points to a JDK ≥ 8 and `mvn -version` shows the correct JDK. |
-| Database file not created | The directory where the JAR is executed must be writable. |
-| `JSESSIONID` missing on API call | Be sure to send the cookie (`-b 'JSESSIONID=...'` with `curl` or `withCredentials` in browsers). |
+| Symptom | Likely cause | Fix |
+|---------|--------------|-----|
+| `java: invalid source release 8` | `JAVA_HOME` points to a JDK older than 8 | Update `JAVA_HOME` to a JDK ≥ 8 and verify with `java -version`. |
+| Database file not created | The directory where the JAR is executed is not writable | Run the JAR from a writable folder, or change the SQLite data source path via `DatabaseUtil`. |
+| `JSESSIONID` missing on API call | Cookie not sent or lost | Ensure the browser or tool sends the `JSESSIONID` cookie (`-b 'JSESSIONID=...'` with `curl`, `withCredentials` in AJAX). |
+| Application fails to start | Port 8080 already in use | Stop the conflicting process or change the Tomcat port in `pom.xml` or `web.xml`. |
 
 ---
 
 ## Contributing
 
-Pull requests are welcome! Please:
+Pull requests are welcome! Please follow these guidelines:
 
-1. Run the tests: `mvn test`.  
-2. Follow the existing style.  
-3. Update documentation if you add or modify features.  
-4. Write clear commit messages and PR descriptions.
+1. Checkout a new branch.
+2. Run `mvn test` to ensure existing tests pass.
+3. Add or modify code with clear intent; keep the coding style consistent.
+4. If you add or change features, update this README accordingly.
+5. Submit a descriptive pull request.
 
-If you hit a bug, open an issue with a brief description and, if possible, a minimal reproducible example.
+If you encounter a bug, open an issue with a concise description and, if possible, a minimal reproducible example.
 
 ---
 
 ## Changelog
 
-* **2026‑09‑13** – Minor README cleanup, added concise feature list.  
-* **2026‑09‑04** – Updated badges and table of contents.  
-* **2026‑08‑12** – Added tech‑stack table.
+- **2026‑09‑13** – Minor README cleanup, added concise feature list.  
+- **2026‑09‑04** – Updated badges and table of contents.  
+- **2026‑08‑12** – Added tech‑stack table.
 
 ---
 
