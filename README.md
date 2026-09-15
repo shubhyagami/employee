@@ -15,12 +15,13 @@ Everything is packaged in a single “fat” JAR – no external application ser
 ## Table of contents
 
 - [Overview](#overview)
+- [Quick start](#quick-start)
 - [Features](#features)
 - [Technical stack](#technical-stack)
 - [Prerequisites](#prerequisites)
 - [Getting started](#getting-started)
-  - [Build & run (plain JAR)](#build--run-plain-jar)
-  - [Build & run with Maven](#build--run-with-maven)
+  - [Run the fat JAR](#run-the-fat-jar)
+  - [Run via Maven](#run-via-maven)
 - [Using the application](#using-the-application)
   - [Web UI](#web-ui)
   - [REST API](#rest-api)
@@ -38,18 +39,36 @@ Everything is packaged in a single “fat” JAR – no external application ser
 
 - A JSP‑based UI for CRUD operations on employee records.
 - A RESTful API (`/employees`) for programmatic access.
-- Automatic SQLite schema creation on first run.
-- Session management via HTTP cookies (`JSESSIONID`), shared between UI and API.
+- Automatic SQLite schema creation on first launch.
+- Session handling via HTTP cookies (`JSESSIONID`), shared between UI and API.
 
-The application is deployed under the context path **EmployeeManagementSystem** by default, configured in `WEB-INF/web.xml`.
+By default the application is deployed under the context path **EmployeeManagementSystem**, as defined in `WEB-INF/web.xml`.
+
+---
+
+## Quick start
+
+```bash
+# Clone the repository
+git clone https://github.com/shubhyagami/employee.git
+cd employee
+
+# Build the single executable JAR
+mvn clean package
+
+# Run it
+java -jar target/employee-jar-with-dependencies.jar
+```
+
+Open <http://localhost:8080/EmployeeManagementSystem/> to view the UI.
 
 ---
 
 ## Features
 
 - **User authentication** – register, login, and maintain a session.
-- **Employee CRUD** – create, read, update, delete employees.
-- **REST API** – standard endpoints for CRUD operations.
+- **Employee CRUD** – create, read, update, delete employee records.
+- **REST API** – standard CRUD endpoints, JSON responses.
 - **Embedded server** – runs on bundled Tomcat 7; no external deployment needed.
 - **Database initialization** – SQLite schema is created automatically on first launch.
 
@@ -57,57 +76,51 @@ The application is deployed under the context path **EmployeeManagementSystem** 
 
 ## Technical stack
 
-| Category | Technology |
-|---------|------------|
-| Language | Java 8+ |
-| Server | Embedded Tomcat 7 |
-| Servlet API | `javax.servlet` |
-| Database | SQLite 3.45.1 |
-| Build tool | Maven 3+ |
-| Front‑end | JSP, HTML, CSS |
+| Category    | Details                 |
+|-------------|------------------------|
+| Language    | Java 8+                |
+| Server      | Embedded Tomcat 7       |
+| Servlet API | `javax.servlet`       |
+| Database    | SQLite 3.45.1          |
+| Build tool  | Maven 3+               |
+| Front‑end   | JSP, HTML, CSS         |
 
 ---
 
 ## Prerequisites
 
-| Tool | Minimum version | Check command |
-|------|------------------|---------------|
-| JDK | 8 or newer | `java -version` |
-| Maven | 3+ | `mvn -version` |
-| Git | – | `git --version` |
+| Tool | Minimum version | Check command          |
+|------|-----------------|------------------------|
+| JDK  | 8+              | `java -version`        |
+| Maven | 3+             | `mvn -version`         |
+| Git   | –              | `git --version`         |
 
 ---
 
 ## Getting started
 
-The following instructions explain how to build the project and run the application locally.
-
-### Build & run (plain JAR)
+### Run the fat JAR
 
 ```bash
-# Clone the repository
-git clone https://github.com/shubhyagami/employee.git
-cd employee
-
-# Build the fat JAR
+# Build
 mvn clean package
 
-# Run the application
+# Run
 java -jar target/employee-jar-with-dependencies.jar
 ```
 
-Navigate to `http://localhost:8080/EmployeeManagementSystem/` to see the UI.
+The application listens on port **8080** by default.
 
-### Build & run with Maven
+### Run via Maven
 
-If you prefer to run the application directly from Maven:
+If you prefer to start the application directly from Maven (requires the Tomcat plugin):
 
 ```bash
-# Start the bundled Tomcat
+# Using Maven
 mvn tomcat7:run
 ```
 
-or, if you use the Maven wrapper:
+or with the Maven wrapper:
 
 ```bash
 ./mvnw clean package
@@ -120,22 +133,22 @@ or, if you use the Maven wrapper:
 
 ### Web UI
 
-1. Open <http://localhost:8080/EmployeeManagementSystem/> in a browser.  
+1. Open <http://localhost:8080/EmployeeManagementSystem/>.  
 2. Register a new user on **reg.jsp** (or **register.jsp**).  
 3. Log in via **sign.jsp**.  
 4. Use the UI pages to add, edit, or delete employees.
 
 ### REST API
 
-All responses are JSON. The API base path is relative to the context path.  
-Authentication is cookie based: log in first, then send the `JSESSIONID` cookie with each request.
+All responses are JSON. The base path is relative to the application context.  
+Authentication is cookie‑based: after logging in, include the `JSESSIONID` cookie with each request.
 
-| Method | Endpoint | Purpose |
-|--------|-----------|---------|
-| GET | `/employees` | List all employees |
-| POST | `/employees` | Create a new employee |
-| PUT | `/employees/{id}` | Update an existing employee |
-| DELETE | `/employees/{id}` | Delete an employee |
+| Method | Endpoint            | Purpose                     |
+|--------|---------------------|-----------------------------|
+| GET    | `/employees`        | List all employees           |
+| POST   | `/employees`         | Create a new employee      |
+| PUT    | `/employees/{id}`  | Update an existing employee |
+| DELETE | `/employees/{id}`  | Delete an employee          |
 
 **Example – create an employee**
 
@@ -149,7 +162,7 @@ curl -X POST \
 
 Replace `JSESSIONID=...` with the cookie value obtained after logging in.
 
-> **Tip**: In browsers, enable “Include cookies” or use a helper extension like *ModHeader* to preserve authentication across requests.
+> **Tip**: In browsers, enable “Include cookies” or use an extension such as *ModHeader* to preserve authentication across requests.
 
 ---
 
@@ -186,12 +199,12 @@ The context path is defined in `WEB-INF/web.xml` and defaults to `EmployeeManage
 
 ## Troubleshooting
 
-| Symptom | Likely cause | Fix |
-|---------|--------------|-----|
-| `java: invalid source release 8` | `JAVA_HOME` points to a JDK older than 8 | Update `JAVA_HOME` to a JDK ≥ 8 and verify with `java -version`. |
-| Database file not created | The directory where the JAR is executed is not writable | Run the JAR from a writable folder, or change the SQLite data source path via `DatabaseUtil`. |
-| `JSESSIONID` missing on API call | Cookie not sent or lost | Ensure the browser or tool sends the `JSESSIONID` cookie (`-b 'JSESSIONID=...'` with `curl`, `withCredentials` in AJAX). |
-| Application fails to start | Port 8080 already in use | Stop the conflicting process or change the Tomcat port in `pom.xml` or `web.xml`. |
+| Symptom                                 | Likely cause                                        | Fix                                               |
+|---------------------------------------- | --------------------------------------------------- | ------------------------------------------------- |
+| `java: invalid source release 8`        | `JAVA_HOME` points to a JDK older than Java 8        | Update `JAVA_HOME` to a JDK ≥ 8; verify with `java -version`. |
+| Database file not created               | Current directory is not writable                    | Run the JAR from a writable folder, or change the SQLite data source path via `DatabaseUtil`. |
+| `JSESSIONID` missing on API call        | Cookie not sent or lost                              | Ensure the tool sends the cookie (`-b 'JSESSIONID=...'` with `curl`, `withCredentials` in AJAX). |
+| Application fails to start            | Port 8080 already in use                             | Stop the conflicting process, or change the Tomcat port in `pom.xml` or `web.xml`. |
 
 ---
 
@@ -199,20 +212,20 @@ The context path is defined in `WEB-INF/web.xml` and defaults to `EmployeeManage
 
 Pull requests are welcome! Please follow these guidelines:
 
-1. Checkout a new branch.
-2. Run `mvn test` to ensure existing tests pass.
-3. Add or modify code with clear intent; keep the coding style consistent.
-4. If you add or change features, update this README accordingly.
-5. Submit a descriptive pull request.
+1. Create a new topic branch.  
+2. Run `mvn test` to ensure the test suite passes.  
+3. Keep the coding style consistent with the existing code.  
+4. If you add or modify features, update the README accordingly.  
+5. Submit a detailed pull request.
 
-If you encounter a bug, open an issue with a concise description and, if possible, a minimal reproducible example.
+For bug reports, open an issue with a concise description and, if possible, a minimal reproducible example.
 
 ---
 
 ## Changelog
 
 - **2026‑09‑13** – Minor README cleanup, added concise feature list.  
-- **2026‑09‑04** – Updated badges and table of contents.  
+- **2026‑09‑04** – Updated badges and TOC.  
 - **2026‑08‑12** – Added tech‑stack table.
 
 ---
