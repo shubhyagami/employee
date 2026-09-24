@@ -1,3 +1,4 @@
+[K[2m  [2mmodel deepseek-ai/deepseek-v4.1-flash failed, trying next...[0m[0m
 # Employee Management System
 
 A lightweight Java web application that stores employee data in an embedded SQLite database and runs on a bundled Tomcat 7 server.  
@@ -12,46 +13,42 @@ Everything is packaged in a single executable JAR – no external application se
 
 ---
 
-## Table of contents
+## Quick start
 
-- [Overview](#overview)
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Getting started](#getting-started)
-  - [Run the fat JAR](#run-the-fat-jar)
-  - [Run via Maven](#run-via-maven)
-- [Using the application](#using-the-application)
-  - [Web UI](#web-ui)
-  - [REST API](#rest-api)
-- [Configuration](#configuration)
-- [Project structure](#project-structure)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [Changelog](#changelog)
-- [License](#license)
+```bash
+git clone https://github.com/shubhyagami/employee.git
+cd employee
+mvn clean package
+java -jar target/employee-jar-with-dependencies.jar
+```
+
+Open <http://localhost:8080/EmployeeManagementSystem/> to view the web UI or hit the REST endpoints under `/employees`.
+
+> **Tip**: The bundle runs on port 8080 by default. Override it with `-Dtomcat.port=9090` if needed.
 
 ---
 
 ## Overview
 
-**Employee Management System** is a self‑contained Java web app that provides:
+The application offers:
 
-- A JSP‑based UI for performing CRUD operations on employee records.
-- A RESTful API (`/employees`) for programmatic access.
-- Automatic SQLite schema creation on first launch.
-- Session handling via HTTP cookies (`JSESSIONID`), shared between the UI and API.
+- JSP‑based CRUD UI for employee records  
+- A RESTful API (`/employees`) returning JSON  
+- Automatic SQLite schema creation on first run  
+- Cookie‑based session handling (`JSESSIONID`) shared between UI and API  
+- Self‑contained deployment via an embedded Tomcat 7
 
-The application is deployed under the context path **EmployeeManagementSystem** by default, as defined in `WEB-INF/web.xml`.
+The context path is **EmployeeManagementSystem** (`WEB-INF/web.xml`).
 
 ---
 
 ## Features
 
-- **User registration & login** – persistent sessions via cookies.
-- **Employee CRUD** – create, read, update, and delete employees.
-- **REST API** – standard CRUD endpoints with JSON responses.
-- **Embedded Tomcat 7** – runs as a standalone server; no external deployment necessary.
-- **Auto‑initialisation** – SQLite schema is created automatically on first launch.
+- User registration & login with persistent sessions  
+- Create, read, update, and delete employee records  
+- REST API: `GET /employees`, `POST /employees`, `PUT /employees/{id}`, `DELETE /employees/{id}`  
+- Embedded Tomcat 7; no external server needed  
+- Automatic database bootstrap on first launch  
 
 ---
 
@@ -59,39 +56,37 @@ The application is deployed under the context path **EmployeeManagementSystem** 
 
 | Tool | Minimum version | Check command |
 |------|-----------------|---------------|
-| JDK | 8+ | `java -version` |
-| Maven | 3+ | `mvn -version` |
-| Git | – | `git --version` |
+| JDK  | 8+              | `java -version` |
+| Maven | 3+             | `mvn -version` |
+| Git  | –               | `git --version` |
 
 ---
 
 ## Getting started
 
-### Run the fat JAR
+### 1. Build the fat JAR
 
 ```bash
-# Clone the repository
-git clone https://github.com/shubhyagami/employee.git
-cd employee
-
-# Build the executable JAR
 mvn clean package
+```
 
-# Start the server
+The JAR is created at `target/employee-jar-with-dependencies.jar`.
+
+### 2. Run the application
+
+```bash
 java -jar target/employee-jar-with-dependencies.jar
 ```
 
-The application listens on `localhost:8080` by default. Open <http://localhost:8080/EmployeeManagementSystem/> to use the web UI.
+The server starts on `localhost:8080`. Open the web UI at <http://localhost:8080/EmployeeManagementSystem/> or use the API.
 
-### Run via Maven
-
-If you prefer to start the application directly from Maven (requires the Tomcat plugin):
+### 3. Alternative – run via Maven (Tomcat plugin)
 
 ```bash
 mvn tomcat7:run
 ```
 
-or with the Maven wrapper:
+or with the wrapper:
 
 ```bash
 ./mvnw clean package
@@ -104,24 +99,23 @@ or with the Maven wrapper:
 
 ### Web UI
 
-1. Open <http://localhost:8080/EmployeeManagementSystem/>.
-2. Register a new user on **reg.jsp** (or **register.jsp**).
-3. Log in via **sign.jsp**.
-4. Use the admin pages to add, edit, or delete employees.
+1. Open <http://localhost:8080/EmployeeManagementSystem/>  
+2. Register a user on **reg.jsp** or **register.jsp**  
+3. Log in via **sign.jsp**  
+4. Manage employees from the admin pages
 
 ### REST API
 
-All responses are JSON. The base path is relative to the application context.  
-Authentication is cookie‑based: after logging in, include the `JSESSIONID` cookie with each request.
+All responses are JSON. Authentication is cookie‑based: after logging in, include the `JSESSIONID` cookie on each request.
 
-| Method | Endpoint | Purpose |
-|--------|----------|---------|
-| GET | `/employees` | List all employees |
-| POST | `/employees` | Create a new employee |
-| PUT | `/employees/{id}` | Update an existing employee |
-| DELETE | `/employees/{id}` | Delete an employee |
+| Method | Endpoint | Description |
+|--------|----------|--------------|
+| `GET` | `/employees` | List all employees |
+| `POST` | `/employees` | Create a new employee |
+| `PUT` | `/employees/{id}` | Update an employee |
+| `DELETE` | `/employees/{id}` | Delete an employee |
 
-**Example – create an employee**
+**Example – create an employee via curl**
 
 ```bash
 curl -X POST \
@@ -131,14 +125,12 @@ curl -X POST \
   -d '{"name":"Alice","role":"Developer","salary":70000}'
 ```
 
-> **Tip:** In browsers, enable “Include cookies” or use an extension such as *ModHeader* to preserve authentication across requests.
-
 ---
 
 ## Configuration
 
-- **Tomcat port** – change the port by setting the system property `-Dtomcat.port=9090` or editing `pom.xml`.
-- **SQLite data file** – the file is created in `${user.dir}/employee.db`. Change the path in `DatabaseUtil` if a different location is required.
+- **Tomcat port** – `-Dtomcat.port=9090` (or edit `pom.xml`)  
+- **SQLite data file** – defaults to `${user.dir}/employee.db`; change in `DatabaseUtil` if needed
 
 ---
 
@@ -174,37 +166,35 @@ employee/
 ## Troubleshooting
 
 | Symptom | Likely cause | Fix |
-|---------|--------------|-----|
-| `java: invalid source release 8` | `JAVA_HOME` points to a JDK older than Java 8 | Update `JAVA_HOME` to a JDK ≥ 8; run `java -version`. |
-| Database file not created | Current directory is not writable | Run the JAR from a writable folder or change the SQLite data source path via `DatabaseUtil`. |
-| `JSESSIONID` missing on API call | Cookie not sent or lost | Ensure the tool sends the cookie (`-b 'JSESSIONID=...'` with `curl`, or `withCredentials` in AJAX). |
-| Application fails to start | Port 8080 already in use | Stop the conflicting process or change the Tomcat port in `pom.xml` or `web.xml`. |
+|--------|--------------|-----|
+| `java: invalid source release 8` | `JAVA_HOME` points to JDK < 8 | Point `JAVA_HOME` to a Java 8+ JDK |
+| SQLite file not created | No write permission | Run the JAR from a writable directory or change the SQLite path |
+| `JSESSIONID` missing | Cookie not sent | Include the cookie in requests (`-b` with curl, `withCredentials` in XHR/Fetch) |
+| Application fails to start | Port 8080 already in use | Stop the conflicting process or set a different port |
 
 ---
 
 ## Contributing
 
-Pull requests are welcome! Please follow these guidelines:
+1. Fork the repo and create a feature branch.  
+2. Run `mvn test` – all tests should pass.  
+3. Keep the code style consistent with the existing code.  
+4. Update this README if you add or remove functionality.  
+5. Submit a pull request with a clear description.
 
-1. Create a feature branch.
-2. Run `mvn test` to ensure the test suite passes.
-3. Keep the code style consistent with the existing code.
-4. Update the README if you add or change features.
-5. Submit a detailed pull request.
-
-For bug reports, open an issue with a concise description and, if possible, a minimal reproducible example.
+Bug reports welcome – please include a reproducible example if possible.
 
 ---
 
 ## Changelog
 
-- **2026‑09‑18** – Minor README cleanup and typo fixes.
-- **2026‑09‑13** – Added concise feature list.
-- **2026‑09‑04** – Updated badges and table of contents.
+- **2026‑09‑18** – Minor README cleanup and typo fixes.  
+- **2026‑09‑13** – Added concise feature list.  
+- **2026‑09‑04** – Updated badges and table of contents.  
 - **2026‑08‑12** – Added tech‑stack table.
 
 ---
 
 ## License
 
-This project is licensed under the MIT License – see the `LICENSE` file for details.
+MIT – see the `LICENSE` file.
